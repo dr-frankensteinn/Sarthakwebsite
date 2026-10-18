@@ -207,8 +207,9 @@
                 Developing young minds through mathematics since 2011. We combine ancient Vedic wisdom with modern abacus techniques to build speed, accuracy and confidence.
             </p>
 
-            <form name="callback" method="POST" data-netlify="true" class="mt-8 max-w-md mx-auto">
+            <form name="callback" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="js-netlify-form mt-8 max-w-md mx-auto" data-success="Thanks! We'll call you shortly to book your free trial class.">
                 <input type="hidden" name="form-name" value="callback">
+                <p class="hidden"><label>Leave this empty: <input name="bot-field"></label></p>
                 <div class="flex items-center bg-white rounded-full shadow-soft pl-5 pr-1.5 py-1.5 ring-1 ring-white focus-within:ring-brand-blue/40">
                     <label for="callback-phone" class="sr-only">Your phone number</label>
                     <input id="callback-phone" type="tel" name="phone" required placeholder="Your phone number"
@@ -217,7 +218,7 @@
                         Call me back
                     </button>
                 </div>
-                <p class="mt-3 text-xs text-gray-500">We'll call you to book a free trial class. No obligation.</p>
+                <p class="form-note mt-3 text-xs text-gray-500" role="status" aria-live="polite">We'll call you to book a free trial class. No obligation.</p>
             </form>
 
             <!-- Rotating course cards -->
@@ -653,8 +654,9 @@
                 <p class="mt-3">Zero cost. No obligation. See the method in action.</p>
             </div>
             <div class="bg-white rounded-3xl shadow-card p-6 md:p-10">
-                <form name="enrollment" method="POST" data-netlify="true" class="space-y-5">
+                <form name="enrollment" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="js-netlify-form space-y-5" data-success="Thank you! Your free trial request is in. We'll call you shortly to fix a time.">
                     <input type="hidden" name="form-name" value="enrollment">
+                    <p class="hidden"><label>Leave this empty: <input name="bot-field"></label></p>
 
                     <div class="grid md:grid-cols-2 gap-5">
                         <div>
@@ -692,6 +694,7 @@
                     <button type="submit" class="w-full bg-brand-green hover:bg-green-700 text-white font-heading font-bold py-4 rounded-full shadow-glow transition">
                         Book My Free Trial
                     </button>
+                    <p class="form-note text-center text-sm text-gray-500" role="status" aria-live="polite"></p>
                 </form>
             </div>
         </div>
@@ -801,6 +804,39 @@
             setActive(0);
             requestAnimationFrame(tick);
         })();
+
+        // Forms: send to Netlify in the background and thank the parent on the page.
+        document.querySelectorAll('form.js-netlify-form').forEach(form => {
+            const note = form.querySelector('.form-note');
+            const button = form.querySelector('button[type=submit]');
+            form.addEventListener('submit', async e => {
+                e.preventDefault();
+                const phone = form.querySelector('input[name=phone]');
+                if (phone && phone.value.replace(/\D/g, '').length < 10) {
+                    note.className = 'form-note mt-3 text-sm font-semibold text-red-600';
+                    note.textContent = 'Please enter a 10-digit phone number.';
+                    phone.focus();
+                    return;
+                }
+                button.disabled = true;
+                try {
+                    const res = await fetch('/', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: new URLSearchParams(new FormData(form)).toString(),
+                    });
+                    if (!res.ok) throw new Error(res.status);
+                    form.reset();
+                    note.className = 'form-note mt-3 text-sm font-semibold text-brand-green';
+                    note.textContent = '✅ ' + form.dataset.success;
+                } catch (err) {
+                    note.className = 'form-note mt-3 text-sm font-semibold text-red-600';
+                    note.innerHTML = 'Sorry, that didn\'t go through. Please call us on <a href="tel:+919975099961" class="underline">+91 99750 99961</a>.';
+                } finally {
+                    button.disabled = false;
+                }
+            });
+        });
 
         // Champions bars: built from results.csv (the same file the results page uses).
         (async () => {
