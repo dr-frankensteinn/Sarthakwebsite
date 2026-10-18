@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Sarthak Academy | Premier Abacus & Vedic Maths Institute</title>
+    <meta name="description" content="Professional mental mathematics training in Vasai. Abacus, Vedic Maths, and Phonics for ages 7-14. 5-Star rated institute established in 2011.">
+    <meta property="og:image" content="logo.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script type='text/javascript' src='https://api.netlify.com/2WyFDyDlw_aGe6zPVoi5MOu498XKZki1SNt7sWmH_Y0s6yec4wuo0XJGTKi-wqlf_g4Cqtrn2VASVZULJxegNWXj3ubdFvfTlkHCSbIXmq4tekR7flC-QB5ed4Mg6guqx3Bjgcbf0rWodKSItESGShGJiRTG23KXQmcEm3LZmYHaRPLWQmpQkLC0jysTY-Lcg0Ej1ZvGM-axACb7Y7Yi7rcFz9rEwLqEm5cprFVuzME7QvOwTaO8Fz6JH4XBQ61eWl63Wkcb0acDDMyLTylSL37ChT2FsNY6IsbDv3MRivgDYyspvoZSCOwpIIk4m1breC4KsMFfkvME_nzk9a8yNxyJvMsirsL4Ov8Fzq2S5SpyHnvSfJXoxMTacge7FKN3N9Fmy3uk19FuGqamcXeU6-SHr6HAGy1r2_HbI5ew1JWy4djrwVNC2KIAauLLIno6QvAYPCn-Fu0wMCN7szZModbHvarJeJTJOXCJ-P9E52iKWMGFfag7TY-ZKka3S2y9w4e9vaTV3xo7kug3w-IQ'></script><script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Open Sans', 'sans-serif'],
+                        heading: ['Montserrat', 'sans-serif'],
+                    },
+                    colors: {
+                        // Extracted from your Logo
+                        brand: {
+                            blue: '#2b4c9b',   /* The Navy Blue from "SARTHAK" */
+                            green: '#00a651',  /* The Tree Green */
+                            yellow: '#f2c94c', /* The Accent Yellow */
+                            dark: '#1a202c',
+                            light: '#f7fafc',
+                        }
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+                        'glow': '0 0 15px rgba(0, 166, 81, 0.3)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Utilities */
+        .text-shadow { text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .gradient-text {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-700 font-sans antialiased">
+
+    <a href="results.html" class="block bg-brand-green text-white text-center text-sm font-semibold py-2.5 px-4 hover:bg-green-700 transition">
+        🏆 Abacus Competition 2026 results are out! <span class="underline">Check your result →</span>
+    </a>
+
+    <nav class="bg-white border-b border-gray-100 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <div class="flex items-center">
+                    <a href="#" class="flex-shrink-0 flex items-center gap-3">
+                        <img src="logo.png" alt="Sarthak Academy" class="h-14 w-auto object-contain">
+                    </a>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="text-sm font-semibold text-gray-600 hover:text-brand-blue transition uppercase tracking-wide">Home</a>
+                    <a href="#methodology" class="text-sm font-semibold text-gray-600 hover:text-brand-blue transition uppercase tracking-wide">Methodology</a>
+                    <a href="#courses" class="text-sm font-semibold text-gray-600 hover:text-brand-blue transition uppercase tracking-wide">Courses</a>
+                    <a href="#locations" class="text-sm font-semibold text-gray-600 hover:text-brand-blue transition uppercase tracking-wide">Centers</a>
+                    <a href="results.html" class="text-sm font-semibold text-brand-green hover:text-green-700 transition uppercase tracking-wide">Results</a>
+                    <button onclick="document.getElementById('contact').scrollIntoView()" class="bg-brand-blue text-white px-6 py-2.5 rounded-md font-heading font-bold hover:bg-blue-800 transition shadow-lg transform hover:-translate-y-0.5">
+                        Enroll Now
+                    </button>
+                </div>
+
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-700 p-2">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 absolute w-full shadow-xl">
+            <div class="px-4 pt-2 pb-6 space-y-1">
+                <a href="#home" class="block px-3 py-3 font-semibold text-gray-700 hover:bg-gray-50">Home</a>
+                <a href="#methodology" class="block px-3 py-3 font-semibold text-gray-700 hover:bg-gray-50">Methodology</a>
+                <a href="#courses" class="block px-3 py-3 font-semibold text-gray-700 hover:bg-gray-50">Courses</a>
+                <a href="results.html" class="block px-3 py-3 font-semibold text-brand-green hover:bg-green-50">Competition Results</a>
+                <a href="#contact" class="block px-3 py-3 font-semibold text-brand-blue hover:bg-blue-50">Contact Us</a>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="relative bg-brand-light pt-20 pb-28 lg:pt-32 lg:pb-40 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <span class="inline-block py-1 px-3 rounded bg-blue-100 text-brand-blue text-xs font-bold tracking-widest uppercase mb-6">
+                Established 2011 • Vasai East
+            </span>
+            <h1 class="text-4xl md:text-6xl font-heading font-extrabold text-brand-dark mb-6 leading-tight">
+                Developing Young Minds <br>
+                <span class="bg-gradient-to-r from-brand-blue to-brand-green gradient-text text-transparent">Through Mathematics</span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
+                Unlock your child's cognitive potential. We combine ancient Vedic wisdom with modern Abacus techniques to build speed, accuracy, and confidence.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button onclick="document.getElementById('contact').scrollIntoView()" class="bg-brand-green text-white px-8 py-4 rounded-md font-heading font-bold text-lg hover:bg-green-700 transition shadow-glow flex items-center justify-center gap-2">
+                    <span>Book Free Trial</span>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                </button>
+                <a href="#courses" class="bg-white border-2 border-brand-blue text-brand-blue px-8 py-4 rounded-md font-heading font-bold text-lg hover:bg-blue-50 transition flex items-center justify-center">
+                    Explore Courses
+                </a>
+            </div>
+        </div>
+        
+        <svg class="absolute bottom-0 left-0 w-full text-white" viewBox="0 0 1440 120" fill="currentColor">
+            <path d="M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,48C1120,43,1280,53,1360,58.7L1440,64L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"></path>
+        </svg>
+    </section>
+
+    <div class="bg-white border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 divide-x divide-gray-100 text-center">
+                <div>
+                    <div class="text-3xl font-heading font-bold text-brand-blue">1800+</div>
+                    <div class="text-xs uppercase tracking-wider text-gray-500 mt-1">Students Mentored</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-heading font-bold text-brand-green">13+</div>
+                    <div class="text-xs uppercase tracking-wider text-gray-500 mt-1">Years Experience</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-heading font-bold text-brand-blue">5.0</div>
+                    <div class="text-xs uppercase tracking-wider text-gray-500 mt-1">Google Rating</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-heading font-bold text-brand-green">10x</div>
+                    <div class="text-xs uppercase tracking-wider text-gray-500 mt-1">Calculation Speed</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section id="methodology" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-heading font-bold text-brand-dark">The Sarthak Methodology</h2>
+                <div class="w-16 h-1 bg-brand-green mx-auto mt-4"></div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-10">
+                <div class="p-8 rounded-xl bg-white border border-gray-100 shadow-soft hover:shadow-lg transition duration-300">
+                    <div class="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-brand-dark mb-3">Whole Brain Development</h3>
+                    <p class="text-gray-600 leading-relaxed text-sm">Our Abacus program stimulates both the left and right hemispheres of the brain, enhancing creativity alongside logic.</p>
+                </div>
+
+                <div class="p-8 rounded-xl bg-white border border-gray-100 shadow-soft hover:shadow-lg transition duration-300">
+                    <div class="w-12 h-12 bg-green-50 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-brand-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-brand-dark mb-3">Concentration Mastery</h3>
+                    <p class="text-gray-600 leading-relaxed text-sm">We train students to focus for extended periods. This discipline translates directly to better performance in school exams.</p>
+                </div>
+
+                <div class="p-8 rounded-xl bg-white border border-gray-100 shadow-soft hover:shadow-lg transition duration-300">
+                    <div class="w-12 h-12 bg-yellow-50 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-brand-dark mb-3">Academic Excellence</h3>
+                    <p class="text-gray-600 leading-relaxed text-sm">Removing the fear of numbers builds immense self-confidence. Our students consistently top their math classes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="courses" class="py-24 bg-brand-light">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="text-brand-green font-bold tracking-widest text-sm uppercase">Curriculum</span>
+                <h2 class="text-3xl font-heading font-bold text-brand-dark mt-2">Specialized Programs</h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-lg overflow-hidden border border-gray-200 hover:border-brand-blue transition duration-300 group">
+                    <div class="h-1.5 bg-brand-blue w-full"></div>
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-6">
+                            <h3 class="text-2xl font-bold text-brand-dark group-hover:text-brand-blue transition">Abacus</h3>
+                            <span class="bg-blue-100 text-brand-blue text-xs font-bold px-2 py-1 rounded">Age 7-14</span>
+                        </div>
+                        <p class="text-gray-600 mb-6 text-sm leading-relaxed">The flagship program. 8 progressive levels designed to take a student from basic counting to advanced mental arithmetic involving complex multiplications and divisions.</p>
+                        <ul class="space-y-3 text-sm text-gray-500 mb-8">
+                            <li class="flex items-center"><svg class="w-4 h-4 text-brand-green mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Visualization Techniques</li>
+                            <li class="flex items-center"><svg class="w-4 h-4 text-brand-green mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Speed Training</li>
+                            <li class="flex items-center"><svg class="w-4 h-4 text-brand-green mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Certified Assessments</li>
+                        </ul>
+                        <button onclick="window.open('https://wa.me/918830557880?text=Inquiry%20Abacus', '_blank')" class="w-full py-3 border border-gray-300 text-gray-700 font-bold rounded hover:bg-brand-blue hover:text-white hover:border-brand-blue transition text-sm uppercase tracking-wide">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg overflow-hidden border border-gray-200 hover:border-brand-green transition duration-300 group">
+                    <div class="h-1.5 bg-brand-green w-full"></div>
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-6">
+                            <h3 class="text-2xl font-bold text-brand-dark group-hover:text-brand-green transition">Vedic Maths</h3>
+                            <span class="bg-green-100 text-brand-green text-xs font-bold px-2 py-1 rounded">9 Months</span>
+                        </div>
+                        <p class="text-gray-600 mb-6 text-sm leading-relaxed">Harnessing the 16 Sutras of ancient Indian mathematics. This course is perfect for students who want to speed up their school math and competitive exam calculations.</p>
+                        <ul class="space-y-3 text-sm text-gray-500 mb-8">
+                            <li class="flex items-center"><svg class="w-4 h-4 text-brand-green mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Fast Algebra & Arithmetic</li>
+                            <li class="flex items-center"><svg class="w-4 h-4 text-brand-green mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Eliminates Silly Mistakes</li>
+                            <li class="flex items-center"><svg class="w-4 h-4 text-brand-green mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Grade Improvement</li>
+                        </ul>
+                        <button onclick="window.open('https://wa.me/918830557880?text=Inquiry%20Vedic', '_blank')" class="w-full py-3 border border-gray-300 text-gray-700 font-bold rounded hover:bg-brand-green hover:text-white hover:border-brand-green transition text-sm uppercase tracking-wide">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg overflow-hidden border border-gray-200 hover:border-yellow-500 transition duration-300 group">
+                    <div class="h-1.5 bg-yellow-500 w-full"></div>
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-6">
+                            <h3 class="text-2xl font-bold text-brand-dark group-hover:text-yellow-600 transition">Phonics</h3>
+                            <span class="bg-yellow-100 text-yellow-800 text-xs font-bold px-2 py-1 rounded">Foundation</span>
+                        </div>
+                        <p class="text-gray-600 mb-6 text-sm leading-relaxed">Language is as important as logic. Our Phonics and Grammar course ensures your child reads fluently, spells correctly, and speaks with confidence.</p>
+                        <ul class="space-y-3 text-sm text-gray-500 mb-8">
+                            <li class="flex items-center"><svg class="w-4 h-4 text-brand-green mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Correct Pronunciation</li>
+                            <li class="flex items-center"><svg class="w-4 h-4 text-brand-green mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Vocabulary Building</li>
+                            <li class="flex items-center"><svg class="w-4 h-4 text-brand-green mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Reading Comprehension</li>
+                        </ul>
+                        <button onclick="window.open('https://wa.me/918830557880?text=Inquiry%20Phonics', '_blank')" class="w-full py-3 border border-gray-300 text-gray-700 font-bold rounded hover:bg-yellow-500 hover:text-white hover:border-yellow-500 transition text-sm uppercase tracking-wide">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+             <div class="flex flex-col md:flex-row justify-between items-end mb-12">
+                <div>
+                    <span class="text-brand-green font-bold tracking-widest text-sm uppercase">Results</span>
+                    <h2 class="text-3xl font-heading font-bold text-brand-dark mt-2">Students In Action</h2>
+                </div>
+                <a href="#" class="hidden md:flex items-center text-brand-blue font-semibold hover:underline">
+                    Visit YouTube Channel 
+                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                </a>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="aspect-video rounded-xl overflow-hidden shadow-lg bg-gray-100 group relative">
+                    <iframe class="w-full h-full" src="https://youtube.com/embed/OrxFIhv31BA" title="Student Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="aspect-video rounded-xl overflow-hidden shadow-lg bg-gray-100 group relative">
+                    <iframe class="w-full h-full" src="https://youtube.com/embed/Id4pIH2m6YI" title="Student Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="locations" class="py-24 bg-gray-50 border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div>
+                    <span class="text-brand-blue font-bold tracking-widest text-sm uppercase">Headquarters</span>
+                    <h2 class="text-3xl font-heading font-bold text-brand-dark mt-2 mb-6">Vasai East Center</h2>
+                    <p class="text-gray-600 mb-8">Our main branch serves as the hub for excellence. Visit us to see our classrooms and meet the faculty.</p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 mt-1">
+                                <svg class="w-6 h-6 text-brand-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="font-bold text-gray-900">Address</h4>
+                                <p class="text-gray-600 text-sm mt-1">Shop No. 24, Shubhlaxmi Commercial Complex,<br>Opposite Vasant Nagari Ground, Vasai-Virar.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                             <div class="flex-shrink-0 mt-1">
+                                <svg class="w-6 h-6 text-brand-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="font-bold text-gray-900">Contact</h4>
+                                <p class="text-gray-600 text-sm mt-1">+91 99750 99618 / +91 88305 57880</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 pt-8 border-t border-gray-200">
+                        <p class="text-sm font-semibold text-gray-500">Other Locations</p>
+                        <p class="text-gray-800 mt-1">We have multiple centers across the city. <a href="#contact" class="text-brand-blue underline">Contact us</a> to find the one nearest to you.</p>
+                    </div>
+                </div>
+
+                <div class="h-96 bg-gray-200 rounded-xl overflow-hidden shadow-lg border border-gray-300">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15053.894860220578!2d72.83973144999999!3d19.3919278!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7a921756f4fb9%3A0x1944c9e40febb56f!2sSarthak%20Academy%20Abacus%20Classes%20Vasai%20East!5e0!3m2!1sen!2sin!4v1792310675436!5m2!1sen!2sin" title="Sarthak Academy Abacus Classes, Vasai East on Google Maps" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="bg-brand-blue py-24 relative overflow-hidden">
+        <div class="max-w-3xl mx-auto px-4 relative z-10">
+            <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
+                <div class="bg-brand-green p-6 text-center">
+                    <h2 class="text-2xl font-heading font-bold text-white">Book a Free Trial Class</h2>
+                    <p class="text-green-50 text-sm mt-2">Zero cost. No obligation. See the method in action.</p>
+                </div>
+                
+                <div class="p-8 md:p-10">
+                    <form name="enrollment" method="POST" data-netlify="true" class="space-y-6">
+                        <input type="hidden" name="form-name" value="enrollment">
+                        
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Parent's Name</label>
+                                <input type="text" name="parent_name" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md focus:border-brand-blue focus:ring-1 focus:ring-brand-blue outline-none transition" required>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Phone</label>
+                                <input type="tel" name="phone" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md focus:border-brand-blue focus:ring-1 focus:ring-brand-blue outline-none transition" required>
+                            </div>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-6">
+                             <div>
+                                <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Child's Name</label>
+                                <input type="text" name="child_name" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md focus:border-brand-blue focus:ring-1 focus:ring-brand-blue outline-none transition" required>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Child's Age</label>
+                                <input type="number" name="child_age" min="6" max="15" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md focus:border-brand-blue focus:ring-1 focus:ring-brand-blue outline-none transition" required>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Interested Course</label>
+                            <select name="course" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md focus:border-brand-blue focus:ring-1 focus:ring-brand-blue outline-none transition">
+                                <option value="Abacus">Abacus</option>
+                                <option value="Vedic Maths">Vedic Maths</option>
+                                <option value="Phonics">Phonics</option>
+                                <option value="Chess">Chess</option>
+                                <option value="Not Sure">I'm not sure yet</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="w-full bg-brand-dark text-white font-bold py-4 rounded-md hover:bg-gray-800 transition shadow-lg uppercase tracking-widest text-sm">
+                            Submit Request
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-gray-400 py-12 border-t border-gray-800 text-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-3">
+                <img src="logo.png" class="h-8 w-auto grayscale opacity-50">
+                <span class="font-heading font-bold text-gray-300">Sarthak Academy</span>
+            </div>
+            
+            <div class="text-center md:text-right">
+                <p>&copy; 2024 Sarthak Academy. All rights reserved.</p>
+                <p class="mt-1 text-gray-600">Founded by Sanjana Sukhesh Champanerkar</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => menu.classList.add('hidden'));
+        });
+    </script>
+</body>
+</html>

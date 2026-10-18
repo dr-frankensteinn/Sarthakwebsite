@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Abacus Competition Results 2026 | Sarthak Academy, Vasai</title>
+    <meta name="description" content="Check your child's Sarthak Academy Abacus & Vedic Maths competition result online. Enter the roll number to see name, level and marks. Sarthak Academy, Vasai East.">
+    <meta property="og:title" content="Abacus Competition Results 2026 | Sarthak Academy">
+    <meta property="og:description" content="Results are out! Enter your roll number to check your result.">
+    <meta property="og:image" content="logo.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Open Sans', 'sans-serif'],
+                        heading: ['Montserrat', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            blue: '#2b4c9b',
+                            green: '#00a651',
+                            yellow: '#f2c94c',
+                            dark: '#1a202c',
+                            light: '#f7fafc',
+                        }
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+                        'glow': '0 0 15px rgba(0, 166, 81, 0.3)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-text {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        @media print {
+            nav, footer, #lookup, #print-hide, .no-print { display: none !important; }
+            body { background: white; }
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-700 font-sans antialiased">
+
+    <nav class="bg-white border-b border-gray-100 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <div class="flex items-center">
+                    <a href="/" class="flex-shrink-0 flex items-center gap-3">
+                        <img src="logo.png" alt="Sarthak Academy" class="h-14 w-auto object-contain">
+                    </a>
+                </div>
+                <div class="flex items-center gap-4 sm:gap-8">
+                    <a href="/" class="text-sm font-semibold text-gray-600 hover:text-brand-blue transition uppercase tracking-wide">Home</a>
+                    <a href="/#courses" class="hidden sm:inline text-sm font-semibold text-gray-600 hover:text-brand-blue transition uppercase tracking-wide">Courses</a>
+                    <a href="/#contact" class="bg-brand-blue text-white px-4 sm:px-6 py-2.5 rounded-md font-heading font-bold hover:bg-blue-800 transition shadow-lg text-sm sm:text-base">
+                        Enroll Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section id="lookup" class="relative bg-brand-light pt-16 pb-24 lg:pt-24 lg:pb-32 overflow-hidden">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 relative z-10 text-center">
+            <span class="inline-block py-1 px-3 rounded bg-green-100 text-brand-green text-xs font-bold tracking-widest uppercase mb-6">
+                Results Declared
+            </span>
+            <h1 class="text-3xl md:text-5xl font-heading font-extrabold text-brand-dark mb-4 leading-tight">
+                <span id="competition-name">Abacus Competition 2026</span><br>
+                <span class="bg-gradient-to-r from-brand-blue to-brand-green gradient-text text-transparent">Check Your Result</span>
+            </h1>
+            <p class="text-lg text-gray-600 mb-10 max-w-xl mx-auto leading-relaxed">
+                Enter the roll number printed on your hall ticket to see the result.
+            </p>
+
+            <form id="result-form" class="bg-white rounded-2xl shadow-2xl p-6 md:p-8 flex flex-col sm:flex-row gap-4 text-left" autocomplete="off">
+                <div class="flex-1">
+                    <label for="roll" class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Roll Number</label>
+                    <input id="roll" name="roll" type="text" inputmode="numeric" placeholder="e.g. 1024" required
+                        class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md focus:border-brand-blue focus:ring-1 focus:ring-brand-blue outline-none transition text-lg">
+                </div>
+                <button id="submit-btn" type="submit" class="sm:self-end bg-brand-green text-white px-8 py-3.5 rounded-md font-heading font-bold text-lg hover:bg-green-700 transition shadow-glow disabled:opacity-60">
+                    View Result
+                </button>
+            </form>
+            <p id="status" class="mt-6 text-sm text-gray-500 min-h-[1.25rem]" role="status" aria-live="polite"></p>
+        </div>
+    </section>
+
+    <section id="result-section" class="hidden py-16 bg-white">
+        <div class="max-w-2xl mx-auto px-4 sm:px-6">
+            <div class="rounded-2xl border border-gray-200 shadow-soft overflow-hidden">
+                <div class="bg-brand-blue px-6 py-5 flex items-center justify-between gap-4">
+                    <div>
+                        <p class="text-blue-100 text-xs font-bold uppercase tracking-widest">Result Card</p>
+                        <p class="text-white font-heading font-bold text-lg" id="card-competition">Abacus Competition 2026</p>
+                    </div>
+                    <img src="logo.png" alt="" class="h-12 w-auto bg-white rounded p-1">
+                </div>
+                <div class="p-6 md:p-8">
+                    <p class="text-xs font-bold text-gray-500 uppercase tracking-wide">Student Name</p>
+                    <p id="r-name" class="text-2xl md:text-3xl font-heading font-extrabold text-brand-dark mt-1 mb-6"></p>
+                    <dl id="r-fields" class="grid grid-cols-2 gap-4"></dl>
+                </div>
+                <div class="no-print bg-gray-50 border-t border-gray-200 px-6 py-4 flex flex-col sm:flex-row gap-3">
+                    <button id="share-btn" type="button" class="flex-1 bg-brand-green text-white py-3 rounded-md font-bold hover:bg-green-700 transition text-sm uppercase tracking-wide">
+                        Share on WhatsApp
+                    </button>
+                    <button type="button" onclick="window.print()" class="flex-1 border border-gray-300 text-gray-700 py-3 rounded-md font-bold hover:bg-white transition text-sm uppercase tracking-wide">
+                        Print / Save PDF
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="no-print py-20 bg-gray-50 border-t border-gray-200">
+        <div class="max-w-3xl mx-auto px-4 text-center">
+            <h2 class="text-2xl md:text-3xl font-heading font-bold text-brand-dark">Want your child on next year's list?</h2>
+            <p class="text-gray-600 mt-4 mb-8">Sarthak Academy has trained 1800+ students in Abacus, Vedic Maths and Phonics in Vasai East since 2011. Book a free trial class today.</p>
+            <a href="/#contact" class="inline-block bg-brand-blue text-white px-8 py-4 rounded-md font-heading font-bold text-lg hover:bg-blue-800 transition shadow-lg">Book Free Trial</a>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-gray-400 py-12 border-t border-gray-800 text-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-3">
+                <img src="logo.png" alt="Sarthak Academy logo" class="h-8 w-auto grayscale opacity-50">
+                <span class="font-heading font-bold text-gray-300">Sarthak Academy</span>
+            </div>
+            <div class="text-center md:text-right">
+                <p>&copy; 2026 Sarthak Academy. All rights reserved.</p>
+                <p class="mt-1 text-gray-600">Queries about results: +91 99750 99618 / +91 88305 57880</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ---- Settings: change these for each competition ----
+        const COMPETITION_NAME = 'Abacus Competition 2026';
+        const RESULTS_FILE = 'results.csv'; // Excel → File → Save As → "CSV UTF-8", named results.csv
+        // -------------------------------------------------------
+
+        // Column headings are matched loosely, so "Roll No", "Roll Number", "ROLL NO." all work.
+        const COLUMN_ALIASES = {
+            roll:  ['roll', 'roll no', 'roll number', 'roll no.', 'rollno', 'seat no', 'seat number'],
+            name:  ['name', 'student name', 'student', 'name of student', 'full name'],
+            level: ['level', 'category', 'class', 'group'],
+            marks: ['marks', 'score', 'total', 'total marks', 'marks obtained'],
+        };
+        const LABELS = { level: 'Level', marks: 'Marks' };
+
+        document.getElementById('competition-name').textContent = COMPETITION_NAME;
+        document.getElementById('card-competition').textContent = COMPETITION_NAME;
+
+        const form = document.getElementById('result-form');
+        const rollInput = document.getElementById('roll');
+        const statusEl = document.getElementById('status');
+        const resultSection = document.getElementById('result-section');
+        let resultsPromise = null;
+
+        function parseCSV(text) {
+            text = text.replace(/^﻿/, '');
+            const rows = [];
+            let row = [], field = '', inQuotes = false;
+            for (let i = 0; i < text.length; i++) {
+                const c = text[i];
+                if (inQuotes) {
+                    if (c === '"' && text[i + 1] === '"') { field += '"'; i++; }
+                    else if (c === '"') inQuotes = false;
+                    else field += c;
+                } else if (c === '"') inQuotes = true;
+                else if (c === ',') { row.push(field); field = ''; }
+                else if (c === '\n' || c === '\r') {
+                    if (c === '\r' && text[i + 1] === '\n') i++;
+                    row.push(field); rows.push(row); row = []; field = '';
+                } else field += c;
+            }
+            if (field !== '' || row.length) { row.push(field); rows.push(row); }
+            return rows.filter(r => r.some(v => v.trim() !== ''));
+        }
+
+        const norm = s => String(s).trim().toLowerCase().replace(/\s+/g, ' ');
+        const normRoll = s => {
+            const v = String(s).trim().toLowerCase().replace(/\s+/g, '');
+            return /^\d+$/.test(v) ? String(parseInt(v, 10)) : v; // "0042" matches "42"
+        };
+
+        async function loadResults() {
+            const res = await fetch(RESULTS_FILE, { cache: 'no-cache' });
+            if (!res.ok) throw new Error('Results file not found');
+            const rows = parseCSV(await res.text());
+            const headers = rows[0].map(h => h.trim());
+            const roles = {};
+            headers.forEach((h, i) => {
+                for (const [role, aliases] of Object.entries(COLUMN_ALIASES)) {
+                    if (!(role in roles) && aliases.includes(norm(h).replace(/[:.]$/, ''))) roles[role] = i;
+                }
+            });
+            if (!('roll' in roles)) throw new Error('No "Roll No" column in results file');
+            const byRoll = new Map();
+            for (const r of rows.slice(1)) {
+                const key = normRoll(r[roles.roll] || '');
+                if (key) byRoll.set(key, r);
+            }
+            return { headers, roles, byRoll };
+        }
+
+        function addField(dl, label, value) {
+            if (value === undefined || String(value).trim() === '') return;
+            const wrap = document.createElement('div');
+            wrap.className = 'bg-brand-light rounded-lg p-4';
+            const dt = document.createElement('dt');
+            dt.className = 'text-xs font-bold text-gray-500 uppercase tracking-wide';
+            dt.textContent = label;
+            const dd = document.createElement('dd');
+            dd.className = 'text-xl font-heading font-bold text-brand-blue mt-1';
+            dd.textContent = value;
+            wrap.append(dt, dd);
+            dl.append(wrap);
+        }
+
+        function showResult(data, row, roll) {
+            const { headers, roles } = data;
+            document.getElementById('r-name').textContent = 'name' in roles ? row[roles.name] : '—';
+            const dl = document.getElementById('r-fields');
+            dl.replaceChildren();
+            addField(dl, 'Roll No.', row[roles.roll]);
+            for (const role of ['level', 'marks']) {
+                if (role in roles) addField(dl, LABELS[role], row[roles[role]]);
+            }
+            // Any other columns in the sheet (e.g. Centre, Rank) are shown too.
+            const used = new Set(Object.values(roles));
+            headers.forEach((h, i) => { if (!used.has(i) && h) addField(dl, h, row[i]); });
+
+            resultSection.classList.remove('hidden');
+            statusEl.textContent = '';
+            resultSection.scrollIntoView({ behavior: 'smooth' });
+
+            const url = new URL(location.href);
+            url.searchParams.set('roll', roll);
+            history.replaceState(null, '', url);
+        }
+
+        async function lookup(roll) {
+            const btn = document.getElementById('submit-btn');
+            btn.disabled = true;
+            statusEl.className = 'mt-6 text-sm text-gray-500 min-h-[1.25rem]';
+            statusEl.textContent = 'Checking…';
+            try {
+                resultsPromise = resultsPromise || loadResults();
+                const data = await resultsPromise;
+                const row = data.byRoll.get(normRoll(roll));
+                if (row) {
+                    showResult(data, row, roll.trim());
+                } else {
+                    resultSection.classList.add('hidden');
+                    statusEl.className = 'mt-6 text-sm text-red-600 font-semibold min-h-[1.25rem]';
+                    statusEl.textContent = `No result found for roll number "${roll.trim()}". Please check the number or call us on +91 88305 57880.`;
+                }
+            } catch (err) {
+                resultsPromise = null;
+                statusEl.className = 'mt-6 text-sm text-red-600 font-semibold min-h-[1.25rem]';
+                statusEl.textContent = 'Results could not be loaded right now. Please try again in a few minutes.';
+                console.error(err);
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            if (rollInput.value.trim()) lookup(rollInput.value);
+        });
+
+        document.getElementById('share-btn').addEventListener('click', () => {
+            const link = location.origin + location.pathname;
+            const text = `${COMPETITION_NAME} results are out! Check your child's result here: ${link}`;
+            window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank');
+        });
+
+        // Support links like results.html?roll=1024
+        const initialRoll = new URLSearchParams(location.search).get('roll');
+        if (initialRoll) { rollInput.value = initialRoll; lookup(initialRoll); }
+    </script>
+</body>
+</html>
