@@ -1,41 +1,121 @@
-Roll No,Student Name,Level,Marks,Centre
-1001,Aarav Patil (Demo),Level 1,96,Vasai East
-1002,Diya Sharma (Demo),Level 1,96,Vasai East
-1003,Vihaan Naik (Demo),Level 1,91,Vasai East
-1004,Ananya Desai (Demo),Level 1,85,Vasai East
-1005,Reyansh Gupta (Demo),Level 1,72,Vasai East
-1006,Saanvi Joshi (Demo),Level 2,98,Vasai East
-1007,Arjun Pawar (Demo),Level 2,93,Vasai East
-1008,Myra D'Souza (Demo),Level 2,89,Vasai East
-1009,Kabir Mehta (Demo),Level 2,81,Vasai East
-1010,Ira Kulkarni (Demo),Level 2,67,Vasai East
-1011,Advik Shinde (Demo),Level 3,99,Vasai East
-1012,Kiara Rao (Demo),Level 3,94,Vasai East
-1013,Ishaan Mhatre (Demo),Level 3,90,Vasai East
-1014,Aadhya Iyer (Demo),Level 3,83,Vasai East
-1015,Atharv Jadhav (Demo),Level 3,76,Vasai East
-1016,Pari Nair (Demo),Level 4,97,Vasai East
-1017,Shaurya Rane (Demo),Level 4,92,Vasai East
-1018,Anika Pereira (Demo),Level 4,88,Vasai East
-1019,Rudra Gaikwad (Demo),Level 4,80,Vasai East
-1020,Navya Thakur (Demo),Level 4,74,Vasai East
-1021,Vivaan Bhosale (Demo),Level 5,95,Vasai East
-1022,Riya Sawant (Demo),Level 5,91,Vasai East
-1023,Krish Chavan (Demo),Level 5,87,Vasai East
-1024,Meera Kadam (Demo),Level 5,79,Vasai East
-1025,Dev Raut (Demo),Level 5,70,Vasai East
-1026,Tara Fernandes (Demo),Level 6,98,Vasai East
-1027,Om Salunkhe (Demo),Level 6,90,Vasai East
-1028,Sia Patkar (Demo),Level 6,86,Vasai East
-1029,Yash Karande (Demo),Level 6,78,Vasai East
-1030,Avni Dalvi (Demo),Level 6,69,Vasai East
-1031,Aryan More (Demo),Level 7,96,Vasai East
-1032,Prisha Ghag (Demo),Level 7,92,Vasai East
-1033,Neel Vartak (Demo),Level 7,84,Vasai East
-1034,Zara Khan (Demo),Level 7,81,Vasai East
-1035,Veer Patil (Demo),Level 7,73,Vasai East
-1036,Kavya Mhatre (Demo),Level 8,99,Vasai East
-1037,Rohan Bhoir (Demo),Level 8,93,Vasai East
-1038,Nisha Gharat (Demo),Level 8,89,Vasai East
-1039,Laksh Pimple (Demo),Level 8,82,Vasai East
-1040,Tanvi Kini (Demo),Level 8,75,Vasai East
+﻿No,Name ,Category,Sub category,Branch,Roll No,Total,Marks,Rank
+1,Janhvi Bhushankumar Nemade ,A,A1,Vasai (W) LT ,VW-LT-A1-001,500,171,
+2,Jheel Mehul Sanghavi ,A,A1,Vasai (W) LT ,VW-LT-A1-002,500,A,
+3,Fatima Zunaid Dingankar ,A,A1,Vasai East,VE-A1-003,500,420,1st
+4,Sai Jitendra Jadhav ,A,A2,Vasai East,VE-A2-004,500,130,
+5,Malhaar Siddesh Tribhuvane ,A,A2,Vasai East,VE-A2-005,500,435,1st
+6,Mahi Siddesh Tribhuvane ,A,A2,Vasai East,VE-A2-006,500,428,2nd
+7,Viyan Dipen Prajapati ,A,A2,Vasai East,VE-A2-007,500,305,
+8,Manasi Manish Gehlot,A,A2,Vasai East,VE-A2-008,500,320,
+9,Vihaan Sujeet Singh,A,A2,Virar,VR-A2-009,500,345,con
+10,Priyansh Siddhi Chavan,A,A2,Virar,VR-A2-010,500,168,
+11,Vihaan Sunil Dhobale,A,A2,Virar,VR-A2-011,500,226,
+12,Aayushi Dhansing Jadhav,A,A2,Virar,VR-A2-012,500,271,
+13,Vivaan Sagar Malav,A,A2,Virar,VR-A2-013,500,180,
+14,Pradyuman T. Munde,A,A2,Dahanu,DH-A2-014,500,271,
+15,Aradhy Madhavendra Kumar Singh,A,A2,Manor,MN-A2-015,500,232,
+16,Sneha Santosh Devkar,A,A2,Manor,MN-A2-016,500,200,
+17,Anushri Anil Chalak,A,A2,Manor,MN-A2-017,500,221,
+18,Vihaan Rahul Deshmukh,A,A2,Bhivandi ,BH-A2-018,500,352,3rd
+19,Advika Deepak Rai ,A,A3,Vasai East,VE-A3-019,500,335,2nd
+20,Mokshi Deepak Kalal,A,A3,Vasai (W) LT ,VW-LT-A3-020,500,258,
+21,Manaswi Rajesh Patil,A,A3,Virar,VR-A3-021,500,164,
+22,Vivan Prashant Sapate,A,A3,Virar,VR-A3-022,500,102,
+23,Shreya Chetan Gurav,A,A3,Virar,VR-A3-023,500,352,1St
+24,Vihan Raghunath Mate,A,A3,Manor,MN-A3-024,500,/,
+25,Krutika Sardar Jadhav,A,A3,Bhivandi ,BH-A3-025,500,290,3rd
+26,Sonam Dnyandeo Waghmare,A,A3,Bhivandi ,BH-A3-026,500,262,
+27,Siddhi Dasharath Mallah,A,A3,Bhivandi ,BH-A3-027,500,270,Con
+28,Kiaan Puneet Poojari,A,A3,Bhivandi ,BH-A3-028,500,240,
+29,Archis Kunal Gorekar,A,A4,Bhivandi ,BH-A4-029,500,306,2nd
+30,Sanvi Bhaurao Lakhe,A,A4,Manor,MN-A4-030,500,358,1st
+31,Amyra Sagar Jaiswal ,B,B2,Vasai East,VE-B2-031,475,203,
+32,Anaya Sagar Jaiswal ,B,B2,Vasai East,VE-B2-032,475,218,
+33,Isha Rajendra Verma ,B,B2,Vasai East,VE-B2-033,475,226,con
+34,Aarushi Ravi Maurya,B,B2,Vasai East,VE-B2-034,475,117,
+35,Nirvi Sanjay Patil,B,B2,Virar,VR-B2-035,475,237,1st
+36,Helen K. Surati,B,B2,Dahanu,DH-B2-036,475,196,
+37,Shaurya S. Londhe,B,B2,Dahanu,DH-B2-037,475,168,
+38,Neema G. Chaudhary,B,B3,Dahanu,DH-B3-038,475,234,con
+39,Godwin K. Surti,B,B3,Dahanu,DH-B3-039,475,196,
+40,Advika G. Raut,B,B3,Dahanu,DH-B3-040,475,160,
+41,Aarvi A. Mali,B,B3,Dahanu,DH-B3-041,475,103,
+42,Naitik Lokesh Shetty,B,B3,Virar,VR-B3-042,475,75,
+43,Yadnyajit Abhijit Shinde,B,B3,Manor,MN-B3-043,475,287,1st
+44,Vidyut Rahul Gupta ,B,B3,Vasai East,VE-B3-044,475,217,
+45,Neel Mukesh Joshi,B,B4,Manor,MN-B4-045,475,184,
+46,Naksh Mukesh Joshi,B,B4,Manor,MN-B4-046,475,44,
+47,Arshaan Jahir Ghanchi,B,B4,Manor,MN-B4-047,475,133,
+48,Ketan Mangesh Valvi,B,B4,Manor,MN-B4-048,475,219,
+49,Swarup Jitendra Dhole,B,B4,Manor,MN-B4-049,475,78,
+50,Yash Ritesh Manchanda,B,B4,Virar,VR-B4-050,475,92,
+51,Dhruv Sachin Khemkar,B,B4,Virar,VR-B4-051,475,223,Con
+52,Inaaya Javed Shaikh,C,C2,Virar,VR-C2-052,500,336,1st
+53,Arnav Vishal Bamane,C,C2,Virar,VR-C2-053,500,249,
+54,Manasvi Umesh Yadav ,C,C2,Vasai East,VE-C2-054,500,301,2nd
+55,Aayansh Omprakash Vishwakarma ,C,C2,Vasai East,VE-C2-055,500,264,3rd
+56,Palash Harsh ,C,C3,Vasai East,VE-C3-056,500,483,1st
+57,Rishaan Dipin ,C,C3,Vasai East,VE-C3-057,500,420,3rd
+58,Yusuf Ahmed Zunaid Dingankar ,C,C3,Vasai East,VE-C3-058,500,432,2nd
+59,Ishaan Mulewa ,C,C3,Vasai East,VE-C3-059,500,345,con
+60,Aaradhya Ramchandra Shinde,C,C3,Virar,VR-C3-060,500,221,
+61,Arnik Prashant Girkar,C,C3,Virar,VR-C3-061,500,242,
+62,Ved Dipak Jadhav,C,C3,Virar,VR-C3-062,500,281,
+63,Adneya Amol Kondlekar,C,C3,Virar,VR-C3-063,500,72,
+64,Navya N. Patil,C,C3,Dahanu,DH-C3-064,500,169,
+65,Ridhvi M. Raut,C,C3,Dahanu,DH-C3-065,500,175,
+66,Mayank Rajesh Mestry,C,C3,Manor,MN-C3-066,500,238,
+67,Vighnesh Gajanan Amanwad,C,C3,Manor,MN-C3-067,500,291,
+68,Riddhi Annaso Sutar,C,C4,Manor,MN-C4-068,500,165,
+69,Shaurya Pankaj Bedre,C,C4,Manor,MN-C4-069,500,289,
+70,Raghav Nitin Nipanikar,C,C4,Manor,MN-C4-070,500,426,1St
+71,Jidnya Dnyaneshwar Chavan,C,C4,Manor,MN-C4-071,500,139,
+72,Shreyas Sandip Kokate,C,C4,Manor,MN-C4-072,500,311,con
+73,Samar Kamlakar Naik,C,C4,Bhivandi ,BH-C4-073,500,413,2nd
+74,Chanpreet Kaur Jutle ,C,C4,Vasai East,VE-C4-074,500,336,3rd
+75,Vihaan Rahul Gupta ,C,C4,Vasai East,VE-C4-075,500,196,
+76,Gunjan Pandurang Arban,C,C4,Virar,VR-C4-076,500,214,
+77,Samarth C. Kulkarni,D,D3,Dahanu,DH-D3-077,550,194,
+78,Sarthak Balaji Kakde,D,D3,Manor,MN-D3-078,550,484,1st
+79,Prashi Mishra ,D,D3,Vasai East,VE-D3-079,550,148,
+80,Chinmay Umesh Bhaip,D,D3,Virar,VR-D3-080,550,306,3rd
+81,Taksh Gopal Varatkar,D,D3,Virar,VR-D3-081,550,352,2nd
+82,Vihan Gopal Varatkar,D,D4,Virar,VR-D4-082,550,274,3rd
+83,Dwij Jitendra Patil,D,D4,Virar,VR-D4-083,550,188,
+84,Manasvi Ravindra Aadga,D,D4,Manor,MN-D4-084,550,418,1St
+85,Prisha Sanil Patil,D,D4,Manor,MN-D4-085,550,A,
+86,Owen Maxson Dbritto ,D,D4,Vasai (W),VW-D4-086,550,316,2nd
+87,Naivya Nirav Mehta ,E,E1,Vasai (W) LT ,VW-LT-E1-087,460,210,
+88,Diaansh Alok Mota ,E,E1,Vasai (W) LT ,VW-LT-E1-088,460,288,
+89,Ruel Steven Pereira ,E,E1,Vasai East,VE-E1-089,460,390,1st
+90,Jasmitha Trivedi ,E,E1,Vasai East,VE-E1-090,460,290,Con
+91,Akshat Divyam ,E,E1,Vasai East,VE-E1-091,460,180,
+92,Anvesha Amogh Kedar ,E,E1,Vasai East,VE-E1-092,460,146,
+93,Arohi Nikhil Shinde ,E,E1,Vasai East,VE-E1-093,460,68,
+94,Hitesh Gajanan Sabbanwar,E,E1,Virar,VR-E1-094,460,380,2nd
+95,Gaurang Jitendra Patil,E,E1,Virar,VR-E1-095,460,302,3rd
+96,Anvisha Dhansing Jadhav,E,E1,Virar,VR-E1-096,460,216,
+97,Nandani Ajit Dayat,E,E1,Dahanu,DH-E1-097,460,142,
+98,Yakshita Kalu Thakare,E,E2,Manor,MN-E2-098,460,340,3rd
+99,Nathalie Jordan Andrades ,E,E2,Vasai (W),VW-E2-099,460,320,
+100,Ridhima Vishwanath Pujari ,E,E2,Vasai (W) LT ,VW-LT-E2-100,460,298,
+101,Swayam Sushank Mestry ,E,E2,Vasai East,VE-E2-101,460,330,Con
+102,Aarav Anil Sharma ,E,E2,Vasai East,VE-E2-102,460,222,
+103,Raagavi Ajay Rawat ,E,E2,Vasai East,VE-E2-103,460,362,2nd
+104,Mayank Rupesh Misal ,E,E2,Vasai East,VE-E2-104,460,378,1St
+105,Isha Vinayak Kotian,E,E2,Virar,VR-E2-105,460,198,
+106,Praniti Y. Sambar,E,E2,Dahanu,DH-E2-106,460,192,
+107,Dhairya H. Raut,E,E3,Dahanu,DH-E3-107,500,357,1St
+108,Prathamesh M. Navaghare,E,E3,Dahanu,DH-E3-108,500,156,
+109,Ian Godson Lemos ,E,E3,Vasai (W),VW-E3-109,500,336,2nd
+110,Ananya Santosh Kadu,E,E3,Virar,VR-E3-110,500,186,
+111,Samrat Sanjay Pevekar ,E,E3,Vasai East,VE-E3-111,500,278,3rd
+112,Rudraunsh Ananda Salian ,E,E4,Vasai East,VE-E4-112,500,378,2nd
+113,Aarav Sunil Joshi ,E,E4,Vasai East,VE-E4-113,500,216,
+114,Atharv Prashant Prabhu ,E,E4,Vasai East,VE-E4-114,500,310,con
+115,Atharva Rakesh Harmalkar ,E,E4,Vasai East,VE-E4-115,500,419,1st
+116,Gyana Deepthi.M ,E,E4,Vasai East,VE-E4-116,500,359,3rd
+117,Niyansh V. Patil,Z,Z1,Dahanu,DH-Z1-117,500,490,1st
+118,Naira Prashant Sapate,Z,Z1,Virar,VR-Z1-118,500,490,3rd
+119,Rudved Sanjay Patil,Z,Z1,Virar,VR-Z1-119,500,490,2nd
+120,Arhat Rahul Pol,Z,Z2,Virar,VR-Z2-120,400,167,Con

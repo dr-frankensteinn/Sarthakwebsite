@@ -87,13 +87,21 @@
                 <span class="bg-gradient-to-r from-brand-blue to-brand-green gradient-text text-transparent">Check Your Result</span>
             </h1>
             <p class="text-lg text-gray-600 mb-10 max-w-xl mx-auto leading-relaxed">
-                Enter the roll number printed on your hall ticket to see the result.
+                Choose your branch and enter the <strong>last 3 digits</strong> of the roll number.<br class="hidden sm:inline">
+                For roll no. <span class="font-semibold text-brand-dark whitespace-nowrap">VE-A2-<u>004</u></span>, choose Vasai East and type <span class="font-semibold text-brand-dark">004</span>.
             </p>
 
             <form id="result-form" class="bg-white rounded-2xl shadow-2xl p-6 md:p-8 flex flex-col sm:flex-row gap-4 text-left" autocomplete="off">
                 <div class="flex-1">
-                    <label for="roll" class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Roll Number</label>
-                    <input id="roll" name="roll" type="text" inputmode="numeric" placeholder="e.g. 1024" required
+                    <label for="branch" class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Branch</label>
+                    <select id="branch" name="branch"
+                        class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md focus:border-brand-blue focus:ring-1 focus:ring-brand-blue outline-none transition text-lg">
+                        <option value="">Loading branches…</option>
+                    </select>
+                </div>
+                <div class="sm:w-40">
+                    <label for="roll" class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Last 3 digits</label>
+                    <input id="roll" name="roll" type="text" inputmode="numeric" placeholder="e.g. 004" required
                         class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md focus:border-brand-blue focus:ring-1 focus:ring-brand-blue outline-none transition text-lg">
                 </div>
                 <button id="submit-btn" type="submit" class="sm:self-end bg-brand-green text-white px-8 py-3.5 rounded-md font-heading font-bold text-lg hover:bg-green-700 transition shadow-glow disabled:opacity-60">
@@ -164,24 +172,31 @@
         // -------------------------------------------------------
 
         // Column headings are matched loosely, so "Roll No", "Roll Number", "ROLL NO." all work.
+        // Columns this page uses: Roll No, Name, Branch, Sub category (or Category), Marks, Total, Rank.
         const COLUMN_ALIASES = {
-            roll:  ['roll', 'roll no', 'roll number', 'roll no.', 'rollno', 'seat no', 'seat number'],
-            name:  ['name', 'student name', 'student', 'name of student', 'full name'],
-            level: ['level', 'category', 'class', 'group'],
-            marks: ['marks', 'score', 'total', 'total marks', 'marks obtained'],
-            rank:  ['rank', 'position', 'place'], // optional; if missing, rank is worked out from marks within each level
+            roll:     ['roll', 'roll no', 'roll number', 'rollno', 'seat no', 'seat number'],
+            name:     ['name', 'student name', 'student', 'name of student', 'full name'],
+            branch:   ['branch', 'centre', 'center', 'centre name', 'center name'],
+            subcat:   ['sub category', 'subcategory', 'sub-category', 'level'],
+            category: ['category', 'group'],
+            marks:    ['marks', 'score', 'marks obtained', 'obtained'],
+            total:    ['total', 'out of', 'max marks', 'maximum marks'],
+            rank:     ['rank', 'position', 'place', 'prize'],
         };
+        // Rank column: "1st", "2nd", "3rd", "con" (any capitals). Blank = participation.
         const AWARDS = {
-            1: { title: '1st Place', subtitle: 'Winner', emoji: '🥇', bar: 'bg-yellow-400 text-yellow-900' },
-            2: { title: '2nd Place', subtitle: 'Runner-up', emoji: '🥈', bar: 'bg-gray-300 text-gray-800' },
-            3: { title: '3rd Place', subtitle: 'Second Runner-up', emoji: '🥉', bar: 'bg-orange-300 text-orange-900' },
+            1: { title: '1st Place', subtitle: 'Winner', emoji: '🥇', bar: 'bg-yellow-400 text-yellow-900', confetti: 5 },
+            2: { title: '2nd Place', subtitle: 'Runner-up', emoji: '🥈', bar: 'bg-gray-300 text-gray-800', confetti: 3 },
+            3: { title: '3rd Place', subtitle: 'Second Runner-up', emoji: '🥉', bar: 'bg-orange-300 text-orange-900', confetti: 2 },
+            con: { title: 'Consolation Prize', subtitle: 'Well done', emoji: '🎖️', bar: 'bg-blue-100 text-brand-blue', confetti: 1 },
+            participation: { title: 'Certificate of Participation', subtitle: 'Well done for taking part! Keep practising — next year could be yours.', emoji: '⭐', bar: 'bg-green-50 text-green-800', confetti: 0 },
         };
-        const LABELS = { level: 'Level', marks: 'Marks' };
 
         document.getElementById('competition-name').textContent = COMPETITION_NAME;
         document.getElementById('card-competition').textContent = COMPETITION_NAME;
 
         const form = document.getElementById('result-form');
+        const branchSelect = document.getElementById('branch');
         const rollInput = document.getElementById('roll');
         const statusEl = document.getElementById('status');
         const resultSection = document.getElementById('result-section');
@@ -208,139 +223,165 @@
             return rows.filter(r => r.some(v => v.trim() !== ''));
         }
 
-        const norm = s => String(s).trim().toLowerCase().replace(/\s+/g, ' ');
-        const normRoll = s => {
-            const v = String(s).trim().toLowerCase().replace(/\s+/g, '');
-            return /^\d+$/.test(v) ? String(parseInt(v, 10)) : v; // "0042" matches "42"
-        };
+        const clean = s => String(s ?? '').trim().replace(/\s+/g, ' ');
+        const norm = s => clean(s).toLowerCase();
+        const normRoll = s => norm(s).replace(/[\s_]/g, '').replace(/–|—/g, '-');
+        const serialOf = roll => { const m = String(roll).match(/(\d+)\s*$/); return m ? parseInt(m[1], 10) : NaN; };
 
         async function loadResults() {
             const res = await fetch(RESULTS_FILE, { cache: 'no-cache' });
             if (!res.ok) throw new Error('Results file not found');
             const rows = parseCSV(await res.text());
-            const headers = rows[0].map(h => h.trim());
             const roles = {};
-            headers.forEach((h, i) => {
+            rows[0].forEach((h, i) => {
+                const key = norm(h).replace(/[:.]$/, '');
                 for (const [role, aliases] of Object.entries(COLUMN_ALIASES)) {
-                    if (!(role in roles) && aliases.includes(norm(h).replace(/[:.]$/, ''))) roles[role] = i;
+                    if (!(role in roles) && aliases.includes(key)) roles[role] = i;
                 }
             });
             if (!('roll' in roles)) throw new Error('No "Roll No" column in results file');
-            const byRoll = new Map();
-            const students = rows.slice(1).filter(r => normRoll(r[roles.roll] || ''));
-            for (const r of students) byRoll.set(normRoll(r[roles.roll]), r);
-            return { headers, roles, byRoll, rankOf: buildRanks(students, roles) };
+            const get = (r, role) => role in roles ? clean(r[roles[role]]) : '';
+
+            const students = rows.slice(1)
+                .map(r => ({
+                    roll: get(r, 'roll'), name: get(r, 'name'), branch: get(r, 'branch'),
+                    category: get(r, 'subcat') || get(r, 'category'),
+                    marks: get(r, 'marks'), total: get(r, 'total'), rank: get(r, 'rank'),
+                }))
+                .filter(s => s.roll);
+            const byRoll = new Map(), byBranchSerial = new Map(), branches = new Map();
+            for (const s of students) {
+                byRoll.set(normRoll(s.roll), s);
+                byBranchSerial.set(norm(s.branch) + '|' + serialOf(s.roll), s);
+                if (s.branch) branches.set(norm(s.branch), s.branch);
+            }
+            return { byRoll, byBranchSerial, branches };
         }
 
-        // Rank within each level: highest marks = 1. Equal marks share a place (90, 90, 85 → 1, 1, 2).
-        function buildRanks(students, roles) {
-            const rankOf = new Map();
-            if ('rank' in roles) {
-                for (const r of students) {
-                    const n = parseInt(String(r[roles.rank]).replace(/\D/g, ''), 10);
-                    if (n) rankOf.set(r, n);
-                }
-                return rankOf;
-            }
-            if (!('marks' in roles)) return rankOf;
-            const groups = new Map();
-            for (const r of students) {
-                const marks = parseFloat(r[roles.marks]);
-                if (isNaN(marks)) continue;
-                const level = 'level' in roles ? norm(r[roles.level]) : '';
-                if (!groups.has(level)) groups.set(level, []);
-                groups.get(level).push([r, marks]);
-            }
-            for (const group of groups.values()) {
-                const distinct = [...new Set(group.map(([, m]) => m))].sort((a, b) => b - a);
-                for (const [r, m] of group) rankOf.set(r, distinct.indexOf(m) + 1);
-            }
-            return rankOf;
+        function fillBranches(data) {
+            const names = [...data.branches.values()].sort((a, b) => a.localeCompare(b));
+            branchSelect.replaceChildren(new Option('Select your branch', ''), ...names.map(n => new Option(n, n)));
+        }
+
+        // A full roll number ("VE-A2-004") works on its own; otherwise branch + last digits.
+        function findStudent(data, branch, input) {
+            const typed = clean(input);
+            if (/[a-z]/i.test(typed)) return data.byRoll.get(normRoll(typed));
+            const serial = parseInt(typed.replace(/\D/g, ''), 10);
+            return data.byBranchSerial.get(norm(branch) + '|' + serial);
+        }
+
+        function awardFor(s) {
+            if (!/^\d+(\.\d+)?$/.test(s.marks)) return null; // absent ("A") or pending ("/"): no award yet
+            const r = norm(s.rank);
+            if (r.startsWith('1')) return AWARDS[1];
+            if (r.startsWith('2')) return AWARDS[2];
+            if (r.startsWith('3')) return AWARDS[3];
+            if (r.startsWith('con')) return AWARDS.con;
+            return AWARDS.participation;
+        }
+
+        function marksText(s) {
+            if (/^a(bsent)?$/i.test(s.marks)) return 'Absent';
+            if (!/^\d+(\.\d+)?$/.test(s.marks)) return ''; // pending ("/") or blank: leave out
+            return s.total ? `${s.marks} / ${s.total}` : s.marks;
         }
 
         function addField(dl, label, value) {
-            if (value === undefined || String(value).trim() === '') return;
+            if (!value) return;
             const wrap = document.createElement('div');
             wrap.className = 'bg-brand-light rounded-lg p-4';
             const dt = document.createElement('dt');
             dt.className = 'text-xs font-bold text-gray-500 uppercase tracking-wide';
             dt.textContent = label;
             const dd = document.createElement('dd');
-            dd.className = 'text-xl font-heading font-bold text-brand-blue mt-1';
+            dd.className = 'text-xl font-heading font-bold text-brand-blue mt-1 break-words';
             dd.textContent = value;
             wrap.append(dt, dd);
             dl.append(wrap);
         }
 
-        function showResult(data, row, roll) {
-            const { headers, roles } = data;
-            document.getElementById('r-name').textContent = 'name' in roles ? row[roles.name] : '—';
+        function showResult(s) {
+            stopConfetti();
+            document.getElementById('r-name').textContent = s.name || '—';
             const dl = document.getElementById('r-fields');
             dl.replaceChildren();
-            addField(dl, 'Roll No.', row[roles.roll]);
-            for (const role of ['level', 'marks']) {
-                if (role in roles) addField(dl, LABELS[role], row[roles[role]]);
-            }
-            // Any other columns in the sheet (e.g. Centre, Rank) are shown too.
-            const used = new Set(Object.values(roles));
-            headers.forEach((h, i) => { if (!used.has(i) && h) addField(dl, h, row[i]); });
+            addField(dl, 'Roll No.', s.roll);
+            addField(dl, 'Branch', s.branch);
+            addField(dl, 'Category', s.category);
+            addField(dl, 'Marks', marksText(s));
 
-            const rank = data.rankOf.get(row);
-            const level = 'level' in roles ? row[roles.level] : '';
-            const award = AWARDS[rank];
+            const award = awardFor(s);
             const awardEl = document.getElementById('r-award');
-            awardEl.classList.toggle('hidden', !rank);
-            if (rank) {
-                awardEl.className = 'px-6 py-5 text-center ' + (award ? award.bar : 'bg-blue-50 text-brand-blue');
-                document.getElementById('r-award-emoji').textContent = award ? award.emoji : '🎖️';
-                document.getElementById('r-award-title').textContent = award ? award.title : 'Consolation Prize';
-                document.getElementById('r-award-sub').textContent = award
-                    ? `${award.subtitle}${level ? ' · ' + level : ''} — Congratulations!`
-                    : 'Well done for taking part! Keep practising — next year could be yours.';
+            awardEl.className = award ? 'px-6 py-5 text-center ' + award.bar : 'hidden';
+            if (award) {
+                document.getElementById('r-award-emoji').textContent = award.emoji;
+                document.getElementById('r-award-title').textContent = award.title;
+                document.getElementById('r-award-sub').textContent = award.confetti > 1
+                    ? `${award.subtitle}${s.category ? ' · Category ' + s.category : ''} — Congratulations!`
+                    : award === AWARDS.con ? `Well done${s.category ? ' in Category ' + s.category : ''}! Keep it up.` : award.subtitle;
             }
 
             resultSection.classList.remove('hidden');
             statusEl.textContent = '';
             resultSection.scrollIntoView({ behavior: 'smooth' });
-            if (award) celebrate(rank);
+            if (award && award.confetti) celebrate(award.confetti);
 
             const url = new URL(location.href);
-            url.searchParams.set('roll', roll);
+            url.searchParams.set('roll', s.roll);
             history.replaceState(null, '', url);
         }
 
-        function celebrate(rank) {
+        let confettiTimers = [];
+        function stopConfetti() {
+            confettiTimers.forEach(clearTimeout);
+            confettiTimers = [];
+            if (typeof confetti === 'function') confetti.reset();
+        }
+
+        function celebrate(bursts) {
             if (typeof confetti !== 'function') return;
             const opts = { disableForReducedMotion: true, zIndex: 100 };
-            const bursts = rank === 1 ? 5 : rank === 2 ? 3 : 2;
             for (let i = 0; i < bursts; i++) {
-                setTimeout(() => {
+                confettiTimers[i] = setTimeout(() => {
                     confetti({ ...opts, particleCount: 90, angle: 60, spread: 70, origin: { x: 0, y: 0.7 } });
                     confetti({ ...opts, particleCount: 90, angle: 120, spread: 70, origin: { x: 1, y: 0.7 } });
                 }, 400 + i * 450);
             }
         }
 
-        async function lookup(roll) {
+        function showError(msg) {
+            stopConfetti();
+            resultSection.classList.add('hidden');
+            statusEl.className = 'mt-6 text-sm text-red-600 font-semibold min-h-[1.25rem]';
+            statusEl.textContent = msg;
+        }
+
+        function getData() {
+            resultsPromise = resultsPromise || loadResults().catch(err => { resultsPromise = null; throw err; });
+            return resultsPromise;
+        }
+
+        async function lookup(branch, input) {
             const btn = document.getElementById('submit-btn');
             btn.disabled = true;
             statusEl.className = 'mt-6 text-sm text-gray-500 min-h-[1.25rem]';
             statusEl.textContent = 'Checking…';
             try {
-                resultsPromise = resultsPromise || loadResults();
-                const data = await resultsPromise;
-                const row = data.byRoll.get(normRoll(roll));
-                if (row) {
-                    showResult(data, row, roll.trim());
+                const data = await getData();
+                const fullRoll = /[a-z]/i.test(input);
+                if (!fullRoll && !branch) return showError('Please choose your branch first.');
+                const s = findStudent(data, branch, input);
+                if (s) {
+                    branchSelect.value = s.branch;
+                    showResult(s);
                 } else {
-                    resultSection.classList.add('hidden');
-                    statusEl.className = 'mt-6 text-sm text-red-600 font-semibold min-h-[1.25rem]';
-                    statusEl.textContent = `No result found for roll number "${roll.trim()}". Please check the number or call us on +91 88305 57880.`;
+                    showError(fullRoll
+                        ? `No result found for roll number "${clean(input)}". Please check it or call us on +91 99750 99961.`
+                        : `No result found for ${branch} – ${clean(input)}. Please check the branch and the last 3 digits, or call us on +91 99750 99961.`);
                 }
             } catch (err) {
-                resultsPromise = null;
-                statusEl.className = 'mt-6 text-sm text-red-600 font-semibold min-h-[1.25rem]';
-                statusEl.textContent = 'Results could not be loaded right now. Please try again in a few minutes.';
+                showError('Results could not be loaded right now. Please try again in a few minutes.');
                 console.error(err);
             } finally {
                 btn.disabled = false;
@@ -349,7 +390,7 @@
 
         form.addEventListener('submit', e => {
             e.preventDefault();
-            if (rollInput.value.trim()) lookup(rollInput.value);
+            if (rollInput.value.trim()) lookup(branchSelect.value, rollInput.value);
         });
 
         document.getElementById('share-btn').addEventListener('click', () => {
@@ -358,9 +399,14 @@
             window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank');
         });
 
-        // Support links like results.html?roll=1024
+        getData().then(fillBranches).catch(err => {
+            showError('Results could not be loaded right now. Please try again in a few minutes.');
+            console.error(err);
+        });
+
+        // Support links like results.html?roll=VE-A2-004
         const initialRoll = new URLSearchParams(location.search).get('roll');
-        if (initialRoll) { rollInput.value = initialRoll; lookup(initialRoll); }
+        if (initialRoll) { rollInput.value = initialRoll; lookup('', initialRoll); }
     </script>
 
     <div class="md:hidden fixed bottom-0 inset-x-0 z-50 grid grid-cols-2 bg-white border-t border-gray-200 shadow-[0_-4px_12px_rgba(0,0,0,0.08)]" style="padding-bottom: env(safe-area-inset-bottom)">
