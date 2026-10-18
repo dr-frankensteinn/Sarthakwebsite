@@ -57,7 +57,7 @@
         "@type": "FAQPage",
         "mainEntity": [
             { "@type": "Question", "name": "Where is Sarthak Academy located?", "acceptedAnswer": { "@type": "Answer", "text": "Sarthak Academy is at Shop No. 24, Shubhlaxmi Commercial Complex, opposite Vasant Nagari Ground, Vasai East, Vasai-Virar." } },
-            { "@type": "Question", "name": "What courses does Sarthak Academy offer?", "acceptedAnswer": { "@type": "Answer", "text": "We offer Abacus (8 levels, for ages 7 to 14), Vedic Maths (a 9-month course) and Phonics (reading, spelling and grammar foundations)." } },
+            { "@type": "Question", "name": "What courses does Sarthak Academy offer?", "acceptedAnswer": { "@type": "Answer", "text": "We offer Abacus (9 levels, for ages 7 to 14), Vedic Maths (a 9-month course) and Phonics (reading, spelling and grammar foundations)." } },
             { "@type": "Question", "name": "Is there a free trial class?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. You can book a free trial class with no obligation using the form on our website or by calling +91 99750 99961." } },
             { "@type": "Question", "name": "How long has Sarthak Academy been teaching?", "acceptedAnswer": { "@type": "Answer", "text": "Sarthak Academy was founded in 2011 by Sanjana Sukhesh Champanerkar and has mentored more than 1800 students." } }
         ]
@@ -116,8 +116,38 @@
         details > summary { list-style: none; }
         details > summary::-webkit-details-marker { display: none; }
         details[open] .faq-icon { transform: rotate(45deg); }
-        details.step[open] { background: #fff; box-shadow: 0 10px 40px -12px rgba(43, 76, 155, 0.18); }
-        details.step[open] .step-num { background: #2b4c9b; color: #fff; }
+        /* Rotating hero cards */
+        .float-y { animation: floatY 6s ease-in-out infinite; }
+        @keyframes floatY { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .stack-card { position: absolute; top: 0; left: 50%; width: 300px; max-width: calc(100vw - 48px);
+            transition: transform .8s cubic-bezier(.2,.8,.2,1), opacity .8s, filter .8s; will-change: transform; }
+        .stack-card[data-pos="center"] { transform: translateX(-50%); z-index: 3; opacity: 1; }
+        .stack-card[data-pos="left"]   { transform: translateX(-118%) translateY(48px) rotate(-12deg) scale(.88); z-index: 1; opacity: .55; filter: blur(1.5px); cursor: pointer; }
+        .stack-card[data-pos="right"]  { transform: translateX(18%) translateY(48px) rotate(12deg) scale(.88); z-index: 2; opacity: .55; filter: blur(1.5px); cursor: pointer; }
+        .stack-card[data-pos="left"] a, .stack-card[data-pos="right"] a { pointer-events: none; }
+        @media (max-width: 767px) {
+            .stack-card[data-pos="left"]  { transform: translateX(-50%) translateY(18px) rotate(-4deg) scale(.94); opacity: .45; }
+            .stack-card[data-pos="right"] { transform: translateX(-50%) translateY(18px) rotate(4deg) scale(.94); opacity: .45; }
+        }
+        /* Join steps */
+        .step-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .4s ease; }
+        .step-item.is-active { background: #fff; box-shadow: 0 10px 40px -12px rgba(43, 76, 155, 0.18); }
+        .step-item.is-active .step-body { grid-template-rows: 1fr; }
+        .step-item.is-active .step-num { background: #2b4c9b; color: #fff; }
+        .step-item.is-done .step-num { background: #00a651; color: #fff; }
+        .step-item.is-done .step-n { opacity: 0; }
+        .step-item.is-done .step-check { opacity: 1; }
+        .step-item.is-done .step-bar { width: 100% !important; }
+        .step-scene { opacity: 0; transform: translateY(16px) scale(.97); transition: opacity .5s, transform .5s; pointer-events: none; }
+        .step-scene.is-active { opacity: 1; transform: none; }
+        .step-scene .scene-pop { opacity: 0; transform: scale(.85); transition: opacity .4s .35s, transform .4s .35s cubic-bezier(.3,1.6,.5,1); }
+        .step-scene.is-active .scene-pop { opacity: 1; transform: none; }
+        .scene-progress { width: 0; transition: width 1.2s .3s ease; }
+        .step-scene.is-active .scene-progress { width: 11%; }
+        @media (prefers-reduced-motion: reduce) {
+            .float-y { animation: none; }
+            .stack-card, .step-scene, .step-scene .scene-pop, .scene-progress, .step-body { transition: none; }
+        }
     </style>
 </head>
 <body class="bg-white text-gray-600 font-sans antialiased pb-16 md:pb-0">
@@ -190,34 +220,62 @@
                 <p class="mt-3 text-xs text-gray-500">We'll call you to book a free trial class. No obligation.</p>
             </form>
 
-            <!-- Floating course card -->
-            <div class="relative mt-14 md:mt-16 h-[430px] md:h-[440px] max-w-3xl mx-auto">
-                <div aria-hidden="true" class="hidden md:block absolute left-0 top-12 w-64 h-80 rounded-2xl bg-white/45 backdrop-blur-sm shadow-soft -rotate-12 p-6 text-left">
-                    <p class="font-heading font-bold text-brand-dark/50">Vedic Maths</p>
-                    <p class="mt-3 text-3xl font-heading font-extrabold text-brand-dark/40">9 Months</p>
-                    <div class="mt-6 space-y-3"><div class="h-2.5 rounded bg-brand-blue/10 w-40"></div><div class="h-2.5 rounded bg-brand-blue/10 w-32"></div><div class="h-2.5 rounded bg-brand-blue/10 w-36"></div></div>
+            <!-- Rotating course cards -->
+            <div class="relative mt-14 md:mt-16 max-w-3xl mx-auto">
+                <div id="course-stack" class="float-y relative h-[400px]" aria-roledescription="carousel" aria-label="Our courses">
+                    <article class="stack-card bg-white rounded-2xl shadow-card p-6 text-left" data-pos="center" data-index="0">
+                        <div class="flex items-center justify-between">
+                            <p class="font-heading font-bold text-brand-dark">Abacus Programme</p>
+                            <span class="text-[11px] font-bold uppercase tracking-wide bg-green-50 text-brand-green rounded-full px-2.5 py-1">Flagship</span>
+                        </div>
+                        <p class="mt-4 font-heading font-extrabold text-brand-dark"><span class="text-4xl">9</span> <span class="text-lg">Levels</span></p>
+                        <p class="text-xs text-gray-500">For ages 7 to 14</p>
+                        <ul class="mt-5 space-y-2.5 text-sm text-gray-700">
+                            <li class="flex items-center gap-2.5"><svg class="w-4 h-4 shrink-0 text-brand-green" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Visualisation techniques</li>
+                            <li class="flex items-center gap-2.5"><svg class="w-4 h-4 shrink-0 text-brand-green" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Speed training</li>
+                            <li class="flex items-center gap-2.5"><svg class="w-4 h-4 shrink-0 text-brand-green" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Certified assessments</li>
+                            <li class="flex items-center gap-2.5"><svg class="w-4 h-4 shrink-0 text-brand-green" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Annual abacus competition</li>
+                            <li class="flex items-center gap-2.5"><svg class="w-4 h-4 shrink-0 text-brand-green" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Free trial class</li>
+                        </ul>
+                        <a href="/abacus-classes-vasai/" class="mt-6 block text-center bg-brand-blue hover:bg-brand-dark text-white rounded-full py-2.5 text-sm font-heading font-bold transition">Explore Abacus</a>
+                    </article>
+                    <article class="stack-card bg-white rounded-2xl shadow-card p-6 text-left" data-pos="right" data-index="1">
+                        <div class="flex items-center justify-between">
+                            <p class="font-heading font-bold text-brand-dark">Vedic Maths</p>
+                            <span class="text-[11px] font-bold uppercase tracking-wide bg-blue-50 text-brand-blue rounded-full px-2.5 py-1">Exam-ready</span>
+                        </div>
+                        <p class="mt-4 font-heading font-extrabold text-brand-dark"><span class="text-4xl">9</span> <span class="text-lg">Months</span></p>
+                        <p class="text-xs text-gray-500">For school and competitive exams</p>
+                        <ul class="mt-5 space-y-2.5 text-sm text-gray-700">
+                            <li class="flex items-center gap-2.5"><svg class="w-4 h-4 shrink-0 text-brand-blue" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>16 Vedic sutras</li>
+                            <li class="flex items-center gap-2.5"><svg class="w-4 h-4 shrink-0 text-brand-blue" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Fast multiplication &amp; division</li>
+                            <li class="flex items-center gap-2.5"><svg class="w-4 h-4 shrink-0 text-brand-blue" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Squares and square roots</li>
+                            <li class="flex items-center gap-2.5"><svg class="w-4 h-4 shrink-0 text-brand-blue" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Fewer silly mistakes</li>
+                            <li class="flex items-center gap-2.5"><svg class="w-4 h-4 shrink-0 text-brand-blue" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Free trial class</li>
+                        </ul>
+                        <a href="/vedic-maths-classes-vasai/" class="mt-6 block text-center bg-brand-green hover:bg-green-700 text-white rounded-full py-2.5 text-sm font-heading font-bold transition">Explore Vedic Maths</a>
+                    </article>
+                    <article class="stack-card bg-white rounded-2xl shadow-card p-6 text-left" data-pos="left" data-index="2">
+                        <div class="flex items-center justify-between">
+                            <p class="font-heading font-bold text-brand-dark">Phonics</p>
+                            <span class="text-[11px] font-bold uppercase tracking-wide bg-yellow-50 text-[#9a7409] rounded-full px-2.5 py-1">Foundation</span>
+                        </div>
+                        <p class="mt-4 font-heading font-extrabold text-brand-dark"><span class="text-4xl">Read</span> <span class="text-lg">&amp; Spell</span></p>
+                        <p class="text-xs text-gray-500">Reading, spelling and grammar</p>
+                        <ul class="mt-5 space-y-2.5 text-sm text-gray-700">
+                            <li class="flex items-center gap-2.5"><svg class="w-4 h-4 shrink-0 text-[#d9a514]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Letter sounds and blending</li>
+                            <li class="flex items-center gap-2.5"><svg class="w-4 h-4 shrink-0 text-[#d9a514]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Correct pronunciation</li>
+                            <li class="flex items-center gap-2.5"><svg class="w-4 h-4 shrink-0 text-[#d9a514]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Vocabulary building</li>
+                            <li class="flex items-center gap-2.5"><svg class="w-4 h-4 shrink-0 text-[#d9a514]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Reading comprehension</li>
+                            <li class="flex items-center gap-2.5"><svg class="w-4 h-4 shrink-0 text-[#d9a514]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Free trial class</li>
+                        </ul>
+                        <a href="/phonics-classes-vasai/" class="mt-6 block text-center bg-brand-yellow hover:bg-[#e6b93a] text-brand-dark rounded-full py-2.5 text-sm font-heading font-bold transition">Explore Phonics</a>
+                    </article>
                 </div>
-                <div aria-hidden="true" class="hidden md:block absolute right-0 top-12 w-64 h-80 rounded-2xl bg-white/45 backdrop-blur-sm shadow-soft rotate-12 p-6 text-left">
-                    <p class="font-heading font-bold text-brand-dark/50">Phonics</p>
-                    <p class="mt-3 text-3xl font-heading font-extrabold text-brand-dark/40">Foundation</p>
-                    <div class="mt-6 space-y-3"><div class="h-2.5 rounded bg-brand-blue/10 w-40"></div><div class="h-2.5 rounded bg-brand-blue/10 w-32"></div><div class="h-2.5 rounded bg-brand-blue/10 w-36"></div></div>
-                </div>
-
-                <div class="relative mx-auto w-full max-w-[300px] bg-white rounded-2xl shadow-card p-6 text-left">
-                    <div class="flex items-center justify-between">
-                        <p class="font-heading font-bold text-brand-dark">Abacus Programme</p>
-                        <span class="text-[11px] font-bold uppercase tracking-wide bg-green-50 text-brand-green rounded-full px-2.5 py-1">Flagship</span>
-                    </div>
-                    <p class="mt-4 font-heading font-extrabold text-brand-dark"><span class="text-4xl">8</span> <span class="text-lg">Levels</span></p>
-                    <p class="text-xs text-gray-500">For ages 7 to 14</p>
-                    <ul class="mt-5 space-y-2.5 text-sm text-gray-700">
-                        <li class="flex items-center gap-2.5"><svg class="w-4 h-4 text-brand-green shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Visualisation techniques</li>
-                        <li class="flex items-center gap-2.5"><svg class="w-4 h-4 text-brand-green shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Speed training</li>
-                        <li class="flex items-center gap-2.5"><svg class="w-4 h-4 text-brand-green shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Certified assessments</li>
-                        <li class="flex items-center gap-2.5"><svg class="w-4 h-4 text-brand-green shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Annual abacus competition</li>
-                        <li class="flex items-center gap-2.5"><svg class="w-4 h-4 text-brand-green shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Free trial class</li>
-                    </ul>
-                    <a href="/abacus-classes-vasai/" class="mt-6 block text-center bg-brand-blue hover:bg-brand-dark text-white rounded-full py-2.5 text-sm font-heading font-bold transition">Explore Abacus</a>
+                <div class="mt-6 flex justify-center gap-2" role="tablist" aria-label="Choose a course">
+                    <button class="stack-dot w-8 h-2 rounded-full bg-brand-blue transition-all" data-go="0" aria-label="Abacus"></button>
+                    <button class="stack-dot w-2 h-2 rounded-full bg-brand-blue/25 transition-all" data-go="1" aria-label="Vedic Maths"></button>
+                    <button class="stack-dot w-2 h-2 rounded-full bg-brand-blue/25 transition-all" data-go="2" aria-label="Phonics"></button>
                 </div>
             </div>
         </div>
@@ -309,9 +367,9 @@
                     </svg>
                 </div>
                 <div>
-                    <span class="inline-block text-xs font-bold uppercase tracking-wide bg-[#e8eefb] text-brand-blue rounded-full px-3 py-1">Age 7–14 · 8 Levels</span>
+                    <span class="inline-block text-xs font-bold uppercase tracking-wide bg-[#e8eefb] text-brand-blue rounded-full px-3 py-1">Age 7–14 · 9 Levels</span>
                     <h3 class="mt-4 text-2xl md:text-3xl font-heading font-extrabold text-brand-dark">Abacus</h3>
-                    <p class="mt-3 leading-relaxed">The flagship programme. Eight progressive levels take a student from basic counting to advanced mental arithmetic involving complex multiplications and divisions.</p>
+                    <p class="mt-3 leading-relaxed">The flagship programme. Nine progressive levels take a student from basic counting to advanced mental arithmetic involving complex multiplications and divisions.</p>
                     <ul class="mt-5 space-y-2 text-sm text-gray-700">
                         <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-brand-yellow"></span>Visualisation techniques</li>
                         <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-brand-green"></span>Speed training</li>
@@ -358,52 +416,116 @@
     </section>
 
     <!-- ===== How to join ===== -->
-    <section class="py-20 bg-white">
+    <section id="join" class="py-20 bg-white">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 grid md:grid-cols-2 gap-12 items-center">
             <div>
                 <p class="text-sm font-bold text-brand-green">✦ How to join</p>
                 <h2 class="mt-2 text-3xl md:text-4xl font-heading font-extrabold text-brand-dark leading-tight">Start your child's journey in 3 simple steps</h2>
-                <div class="mt-8 space-y-3">
-                    <details class="step rounded-2xl border border-gray-100 p-5 transition" name="steps" open>
-                        <summary class="flex items-center gap-4 cursor-pointer font-heading font-bold text-brand-dark"><span class="step-num w-8 h-8 shrink-0 rounded-full bg-brand-light text-brand-blue flex items-center justify-center text-sm">1</span>Book a free trial class</summary>
-                        <p class="mt-3 pl-12 text-sm leading-relaxed">Fill in the form below, request a call back, or call us on <a href="tel:+919975099961" class="text-brand-blue font-semibold">+91 99750 99961</a>. It's free, with no obligation.</p>
-                    </details>
-                    <details class="step rounded-2xl border border-gray-100 p-5 transition" name="steps">
-                        <summary class="flex items-center gap-4 cursor-pointer font-heading font-bold text-brand-dark"><span class="step-num w-8 h-8 shrink-0 rounded-full bg-brand-light text-brand-blue flex items-center justify-center text-sm">2</span>Attend the trial at our Vasai East centre</summary>
-                        <p class="mt-3 pl-12 text-sm leading-relaxed">Your child tries a real class, and you get to see our method in action and meet the teacher.</p>
-                    </details>
-                    <details class="step rounded-2xl border border-gray-100 p-5 transition" name="steps">
-                        <summary class="flex items-center gap-4 cursor-pointer font-heading font-bold text-brand-dark"><span class="step-num w-8 h-8 shrink-0 rounded-full bg-brand-light text-brand-blue flex items-center justify-center text-sm">3</span>Choose a batch and get started</summary>
-                        <p class="mt-3 pl-12 text-sm leading-relaxed">Pick the course and batch that suits your family, and your child starts building speed, accuracy and confidence.</p>
-                    </details>
+                <div id="steps" class="mt-8 space-y-3">
+                    <div class="step-item rounded-2xl border border-gray-100 transition-all duration-300" data-step="0">
+                        <button type="button" class="step-btn w-full flex items-center gap-4 text-left p-5 pb-4 font-heading font-bold text-brand-dark" aria-controls="step-body-0">
+                            <span class="step-num relative w-9 h-9 shrink-0 rounded-full bg-brand-light text-brand-blue flex items-center justify-center text-sm transition-colors">
+                                <span class="step-n">1</span>
+                                <svg class="step-check absolute w-4 h-4 opacity-0 transition-opacity" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                            </span>
+                            Book a free trial class
+                        </button>
+                        <div id="step-body-0" class="step-body">
+                            <div class="overflow-hidden"><p class="px-5 pl-[4.5rem] pb-4 text-sm leading-relaxed">Fill in the form below, request a call back, or call us on <a href="tel:+919975099961" class="text-brand-blue font-semibold">+91 99750 99961</a>. It's free, with no obligation.</p></div>
+                        </div>
+                        <div class="mx-5 mb-4 h-1 rounded-full bg-brand-light overflow-hidden"><div class="step-bar h-full w-0 rounded-full bg-brand-green"></div></div>
+                    </div>
+                    <div class="step-item rounded-2xl border border-gray-100 transition-all duration-300" data-step="1">
+                        <button type="button" class="step-btn w-full flex items-center gap-4 text-left p-5 pb-4 font-heading font-bold text-brand-dark" aria-controls="step-body-1">
+                            <span class="step-num relative w-9 h-9 shrink-0 rounded-full bg-brand-light text-brand-blue flex items-center justify-center text-sm transition-colors">
+                                <span class="step-n">2</span>
+                                <svg class="step-check absolute w-4 h-4 opacity-0 transition-opacity" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                            </span>
+                            Attend the trial at our Vasai East centre
+                        </button>
+                        <div id="step-body-1" class="step-body">
+                            <div class="overflow-hidden"><p class="px-5 pl-[4.5rem] pb-4 text-sm leading-relaxed">Your child tries a real class, and you get to see our method in action and meet the teacher.</p></div>
+                        </div>
+                        <div class="mx-5 mb-4 h-1 rounded-full bg-brand-light overflow-hidden"><div class="step-bar h-full w-0 rounded-full bg-brand-green"></div></div>
+                    </div>
+                    <div class="step-item rounded-2xl border border-gray-100 transition-all duration-300" data-step="2">
+                        <button type="button" class="step-btn w-full flex items-center gap-4 text-left p-5 pb-4 font-heading font-bold text-brand-dark" aria-controls="step-body-2">
+                            <span class="step-num relative w-9 h-9 shrink-0 rounded-full bg-brand-light text-brand-blue flex items-center justify-center text-sm transition-colors">
+                                <span class="step-n">3</span>
+                                <svg class="step-check absolute w-4 h-4 opacity-0 transition-opacity" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                            </span>
+                            Choose a batch and get started
+                        </button>
+                        <div id="step-body-2" class="step-body">
+                            <div class="overflow-hidden"><p class="px-5 pl-[4.5rem] pb-4 text-sm leading-relaxed">Pick the course and batch that suits your family, and your child starts building speed, accuracy and confidence.</p></div>
+                        </div>
+                        <div class="mx-5 mb-4 h-1 rounded-full bg-brand-light overflow-hidden"><div class="step-bar h-full w-0 rounded-full bg-brand-green"></div></div>
+                    </div>
                 </div>
             </div>
 
-            <div class="relative sky-soft rounded-3xl p-8 md:p-12 min-h-[340px] flex items-center justify-center overflow-hidden" aria-hidden="true">
+            <div class="relative sky-soft rounded-3xl min-h-[360px] overflow-hidden" aria-hidden="true">
                 <div class="cloud w-64 h-24 -top-6 -left-10"></div>
-                <div class="relative w-full max-w-xs">
-                    <div class="bg-white rounded-2xl shadow-card p-5">
-                        <div class="flex items-center gap-3">
-                            <img src="logo.png" alt="" class="h-10 w-auto">
-                            <div>
-                                <p class="font-heading font-bold text-brand-dark text-sm">Free Trial Class</p>
-                                <p class="text-xs text-gray-500">Sarthak Academy, Vasai East</p>
+
+                <!-- Step 1: booked -->
+                <div class="step-scene absolute inset-0 flex items-center justify-center p-8" data-scene="0">
+                    <div class="relative w-full max-w-xs">
+                        <div class="bg-white rounded-2xl shadow-card p-5">
+                            <div class="flex items-center gap-3">
+                                <img src="logo.png" alt="" class="h-10 w-auto">
+                                <div>
+                                    <p class="font-heading font-bold text-brand-dark text-sm">Free Trial Class</p>
+                                    <p class="text-xs text-gray-500">Sarthak Academy, Vasai East</p>
+                                </div>
+                            </div>
+                            <div class="mt-4 space-y-2"><div class="h-2.5 rounded bg-brand-light w-full"></div><div class="h-2.5 rounded bg-brand-light w-4/5"></div></div>
+                            <div class="scene-pop mt-4 flex items-center gap-2 bg-[#e9f8ef] text-brand-green rounded-xl px-3 py-2 text-sm font-bold">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                                Booked
                             </div>
                         </div>
-                        <div class="mt-4 space-y-2">
-                            <div class="h-2.5 rounded bg-brand-light w-full"></div>
-                            <div class="h-2.5 rounded bg-brand-light w-4/5"></div>
-                        </div>
-                        <div class="mt-4 flex items-center gap-2 bg-[#e9f8ef] text-brand-green rounded-xl px-3 py-2 text-sm font-bold">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-                            Booked
-                        </div>
+                        <div class="scene-pop absolute -right-5 -bottom-7 bg-white rounded-2xl shadow-card px-4 py-3 flex items-center gap-2 text-sm font-heading font-bold text-brand-dark">📞 We'll call you</div>
                     </div>
-                    <div class="absolute -right-6 -bottom-8 bg-white rounded-2xl shadow-card px-4 py-3 flex items-center gap-2">
-                        <span class="text-2xl">🧮</span>
-                        <span class="text-sm font-heading font-bold text-brand-dark">Level 1</span>
+                </div>
+
+                <!-- Step 2: visit the centre -->
+                <div class="step-scene absolute inset-0 flex items-center justify-center p-8" data-scene="1">
+                    <div class="relative w-full max-w-xs">
+                        <div class="bg-white rounded-2xl shadow-card p-5">
+                            <div class="flex items-center gap-3">
+                                <span class="w-10 h-10 rounded-xl bg-[#e9f8ef] flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-brand-green" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                </span>
+                                <div>
+                                    <p class="font-heading font-bold text-brand-dark text-sm">Vasai East Centre</p>
+                                    <p class="text-xs text-gray-500">Opp. Vasant Nagari Ground</p>
+                                </div>
+                            </div>
+                            <div class="mt-4 grid grid-cols-5 gap-1.5">
+                                <span class="h-7 rounded-md bg-brand-yellow"></span><span class="h-7 rounded-md bg-brand-green"></span><span class="h-7 rounded-md bg-brand-blue"></span><span class="h-7 rounded-md bg-brand-green"></span><span class="h-7 rounded-md bg-brand-yellow"></span>
+                            </div>
+                            <div class="scene-pop mt-4 flex items-center gap-2 bg-brand-light text-brand-blue rounded-xl px-3 py-2 text-sm font-bold">👩‍🏫 Meet the teacher</div>
+                        </div>
+                        <div class="scene-pop absolute -left-6 -top-7 bg-brand-yellow rounded-2xl shadow-card px-4 py-3 text-sm font-heading font-bold text-brand-dark">🧮 First class</div>
                     </div>
-                    <div class="absolute -left-8 -top-8 bg-brand-yellow rounded-2xl shadow-card px-4 py-3 text-sm font-heading font-bold text-brand-dark">⚡ 10x faster</div>
+                </div>
+
+                <!-- Step 3: started -->
+                <div class="step-scene absolute inset-0 flex items-center justify-center p-8" data-scene="2">
+                    <div class="relative w-full max-w-xs">
+                        <div class="bg-white rounded-2xl shadow-card p-5">
+                            <div class="flex items-center justify-between">
+                                <p class="font-heading font-bold text-brand-dark text-sm">Abacus · Level 1</p>
+                                <span class="text-xs font-bold text-brand-green">of 9</span>
+                            </div>
+                            <div class="mt-3 h-2.5 rounded-full bg-brand-light overflow-hidden"><div class="scene-progress h-full rounded-full bg-brand-green"></div></div>
+                            <div class="mt-4 flex gap-1.5">
+                                <span class="flex-1 h-2 rounded-full bg-brand-green"></span><span class="flex-1 h-2 rounded-full bg-brand-light"></span><span class="flex-1 h-2 rounded-full bg-brand-light"></span><span class="flex-1 h-2 rounded-full bg-brand-light"></span><span class="flex-1 h-2 rounded-full bg-brand-light"></span><span class="flex-1 h-2 rounded-full bg-brand-light"></span><span class="flex-1 h-2 rounded-full bg-brand-light"></span><span class="flex-1 h-2 rounded-full bg-brand-light"></span><span class="flex-1 h-2 rounded-full bg-brand-light"></span>
+                            </div>
+                            <div class="scene-pop mt-4 flex items-center gap-2 bg-[#e9f8ef] text-brand-green rounded-xl px-3 py-2 text-sm font-bold">🎉 Welcome to Sarthak!</div>
+                        </div>
+                        <div class="scene-pop absolute -right-5 -top-7 bg-brand-yellow rounded-2xl shadow-card px-4 py-3 text-sm font-heading font-bold text-brand-dark">⚡ Speed &amp; confidence</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -469,7 +591,7 @@
                 </details>
                 <details class="bg-white rounded-2xl shadow-soft p-5">
                     <summary class="flex justify-between items-center gap-4 cursor-pointer font-heading font-bold text-brand-dark">What courses does Sarthak Academy offer?<span class="faq-icon text-brand-green text-2xl transition">+</span></summary>
-                    <p class="mt-3 text-sm leading-relaxed"><a href="/abacus-classes-vasai/" class="text-brand-blue underline">Abacus</a> (8 levels, for ages 7 to 14), <a href="/vedic-maths-classes-vasai/" class="text-brand-blue underline">Vedic Maths</a> (a 9-month course) and <a href="/phonics-classes-vasai/" class="text-brand-blue underline">Phonics</a> (reading, spelling and grammar foundations).</p>
+                    <p class="mt-3 text-sm leading-relaxed"><a href="/abacus-classes-vasai/" class="text-brand-blue underline">Abacus</a> (9 levels, for ages 7 to 14), <a href="/vedic-maths-classes-vasai/" class="text-brand-blue underline">Vedic Maths</a> (a 9-month course) and <a href="/phonics-classes-vasai/" class="text-brand-blue underline">Phonics</a> (reading, spelling and grammar foundations).</p>
                 </details>
                 <details class="bg-white rounded-2xl shadow-soft p-5">
                     <summary class="flex justify-between items-center gap-4 cursor-pointer font-heading font-bold text-brand-dark">Is there a free trial class?<span class="faq-icon text-brand-green text-2xl transition">+</span></summary>
@@ -613,6 +735,72 @@
         document.querySelectorAll('#mobile-menu a').forEach(link => {
             link.addEventListener('click', () => menu.classList.add('hidden'));
         });
+
+        // Rotating hero cards: front card swaps every few seconds; click a side card or dot to bring it forward.
+        (() => {
+            const stack = document.getElementById('course-stack');
+            const cards = [...stack.querySelectorAll('.stack-card')];
+            const dots = [...document.querySelectorAll('.stack-dot')];
+            const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+            let front = 0, timer = null;
+            function show(i) {
+                front = (i + cards.length) % cards.length;
+                cards.forEach((c, k) => {
+                    const offset = (k - front + cards.length) % cards.length;
+                    c.dataset.pos = offset === 0 ? 'center' : offset === 1 ? 'right' : 'left';
+                    c.setAttribute('aria-hidden', offset !== 0);
+                });
+                dots.forEach((d, k) => {
+                    d.classList.toggle('w-8', k === front); d.classList.toggle('w-2', k !== front);
+                    d.classList.toggle('bg-brand-blue', k === front); d.classList.toggle('bg-brand-blue/25', k !== front);
+                    d.setAttribute('aria-selected', k === front);
+                });
+            }
+            function play() { if (!reduce) { clearInterval(timer); timer = setInterval(() => show(front + 1), 4500); } }
+            cards.forEach((c, k) => c.addEventListener('click', e => { if (k !== front) { e.preventDefault(); show(k); play(); } }));
+            dots.forEach((d, k) => d.addEventListener('click', () => { show(k); play(); }));
+            stack.addEventListener('mouseenter', () => clearInterval(timer));
+            stack.addEventListener('mouseleave', play);
+            show(0); play();
+        })();
+
+        // Join steps: autoplay through the 3 steps with a progress bar; click a step to jump to it.
+        (() => {
+            const items = [...document.querySelectorAll('#steps .step-item')];
+            const scenes = [...document.querySelectorAll('.step-scene')];
+            const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const DURATION = 5000;
+            let active = 0, start = 0, paused = false, visible = false, pausedAt = 0;
+            function setActive(i) {
+                active = i;
+                items.forEach((el, k) => {
+                    el.classList.toggle('is-active', k === i);
+                    el.classList.toggle('is-done', k < i);
+                    el.querySelector('.step-btn').setAttribute('aria-expanded', k === i);
+                    if (k >= i) el.querySelector('.step-bar').style.width = '0%';
+                });
+                scenes.forEach((s, k) => s.classList.toggle('is-active', k === i));
+                start = performance.now();
+            }
+            function tick(now) {
+                if (visible && !paused && !reduce) {
+                    const t = Math.min((now - start) / DURATION, 1);
+                    items[active].querySelector('.step-bar').style.width = (t * 100) + '%';
+                    if (t >= 1) setActive((active + 1) % items.length);
+                }
+                requestAnimationFrame(tick);
+            }
+            items.forEach((el, k) => el.querySelector('.step-btn').addEventListener('click', () => setActive(k)));
+            const box = document.getElementById('join');
+            box.addEventListener('mouseenter', () => { paused = true; pausedAt = performance.now(); });
+            box.addEventListener('mouseleave', () => { paused = false; start += performance.now() - pausedAt; });
+            new IntersectionObserver(([e]) => {
+                if (e.isIntersecting && !visible) setActive(active === 0 ? 0 : active);
+                visible = e.isIntersecting;
+            }, { threshold: 0.4 }).observe(box);
+            setActive(0);
+            requestAnimationFrame(tick);
+        })();
 
         // Champions bars: built from results.csv (the same file the results page uses).
         (async () => {
