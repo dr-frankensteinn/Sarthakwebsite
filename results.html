@@ -15,6 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -110,6 +111,11 @@
                     </div>
                     <img src="logo.png" alt="" class="h-12 w-auto bg-white rounded p-1">
                 </div>
+                <div id="r-award" class="hidden px-6 py-5 text-center">
+                    <div id="r-award-emoji" class="text-5xl leading-none"></div>
+                    <p id="r-award-title" class="font-heading font-extrabold text-2xl mt-2"></p>
+                    <p id="r-award-sub" class="text-sm font-semibold mt-1 opacity-80"></p>
+                </div>
                 <div class="p-6 md:p-8">
                     <p class="text-xs font-bold text-gray-500 uppercase tracking-wide">Student Name</p>
                     <p id="r-name" class="text-2xl md:text-3xl font-heading font-extrabold text-brand-dark mt-1 mb-6"></p>
@@ -160,6 +166,12 @@
             name:  ['name', 'student name', 'student', 'name of student', 'full name'],
             level: ['level', 'category', 'class', 'group'],
             marks: ['marks', 'score', 'total', 'total marks', 'marks obtained'],
+            rank:  ['rank', 'position', 'place'], // optional; if missing, rank is worked out from marks within each level
+        };
+        const AWARDS = {
+            1: { title: '1st Place', subtitle: 'Winner', emoji: '🥇', bar: 'bg-yellow-400 text-yellow-900' },
+            2: { title: '2nd Place', subtitle: 'Runner-up', emoji: '🥈', bar: 'bg-gray-300 text-gray-800' },
+            3: { title: '3rd Place', subtitle: 'Second Runner-up', emoji: '🥉', bar: 'bg-orange-300 text-orange-900' },
         };
         const LABELS = { level: 'Level', marks: 'Marks' };
 
@@ -212,11 +224,35 @@
             });
             if (!('roll' in roles)) throw new Error('No "Roll No" column in results file');
             const byRoll = new Map();
-            for (const r of rows.slice(1)) {
-                const key = normRoll(r[roles.roll] || '');
-                if (key) byRoll.set(key, r);
+            const students = rows.slice(1).filter(r => normRoll(r[roles.roll] || ''));
+            for (const r of students) byRoll.set(normRoll(r[roles.roll]), r);
+            return { headers, roles, byRoll, rankOf: buildRanks(students, roles) };
+        }
+
+        // Rank within each level: highest marks = 1. Equal marks share a place (90, 90, 85 → 1, 1, 2).
+        function buildRanks(students, roles) {
+            const rankOf = new Map();
+            if ('rank' in roles) {
+                for (const r of students) {
+                    const n = parseInt(String(r[roles.rank]).replace(/\D/g, ''), 10);
+                    if (n) rankOf.set(r, n);
+                }
+                return rankOf;
             }
-            return { headers, roles, byRoll };
+            if (!('marks' in roles)) return rankOf;
+            const groups = new Map();
+            for (const r of students) {
+                const marks = parseFloat(r[roles.marks]);
+                if (isNaN(marks)) continue;
+                const level = 'level' in roles ? norm(r[roles.level]) : '';
+                if (!groups.has(level)) groups.set(level, []);
+                groups.get(level).push([r, marks]);
+            }
+            for (const group of groups.values()) {
+                const distinct = [...new Set(group.map(([, m]) => m))].sort((a, b) => b - a);
+                for (const [r, m] of group) rankOf.set(r, distinct.indexOf(m) + 1);
+            }
+            return rankOf;
         }
 
         function addField(dl, label, value) {
@@ -246,13 +282,40 @@
             const used = new Set(Object.values(roles));
             headers.forEach((h, i) => { if (!used.has(i) && h) addField(dl, h, row[i]); });
 
+            const rank = data.rankOf.get(row);
+            const level = 'level' in roles ? row[roles.level] : '';
+            const award = AWARDS[rank];
+            const awardEl = document.getElementById('r-award');
+            awardEl.classList.toggle('hidden', !rank);
+            if (rank) {
+                awardEl.className = 'px-6 py-5 text-center ' + (award ? award.bar : 'bg-blue-50 text-brand-blue');
+                document.getElementById('r-award-emoji').textContent = award ? award.emoji : '🎖️';
+                document.getElementById('r-award-title').textContent = award ? award.title : 'Consolation Prize';
+                document.getElementById('r-award-sub').textContent = award
+                    ? `${award.subtitle}${level ? ' · ' + level : ''} — Congratulations!`
+                    : 'Well done for taking part! Keep practising — next year could be yours.';
+            }
+
             resultSection.classList.remove('hidden');
             statusEl.textContent = '';
             resultSection.scrollIntoView({ behavior: 'smooth' });
+            if (award) celebrate(rank);
 
             const url = new URL(location.href);
             url.searchParams.set('roll', roll);
             history.replaceState(null, '', url);
+        }
+
+        function celebrate(rank) {
+            if (typeof confetti !== 'function') return;
+            const opts = { disableForReducedMotion: true, zIndex: 100 };
+            const bursts = rank === 1 ? 5 : rank === 2 ? 3 : 2;
+            for (let i = 0; i < bursts; i++) {
+                setTimeout(() => {
+                    confetti({ ...opts, particleCount: 90, angle: 60, spread: 70, origin: { x: 0, y: 0.7 } });
+                    confetti({ ...opts, particleCount: 90, angle: 120, spread: 70, origin: { x: 1, y: 0.7 } });
+                }, 400 + i * 450);
+            }
         }
 
         async function lookup(roll) {
