@@ -98,7 +98,7 @@
             </h1>
             <p class="text-lg text-gray-600 mb-10 max-w-xl mx-auto leading-relaxed">
                 Choose your branch and enter the <strong>last 3 digits</strong> of the roll number.<br class="hidden sm:inline">
-                For roll no. <span class="font-semibold text-brand-dark whitespace-nowrap">VE-A2-<u>004</u></span>, choose Vasai East and type <span class="font-semibold text-brand-dark">004</span>.
+                For roll no. <span class="font-semibold text-brand-dark whitespace-nowrap">VE-A1-<u>123</u></span>, choose Vasai East and type <span class="font-semibold text-brand-dark">123</span>.
             </p>
 
             <form id="result-form" class="bg-white rounded-3xl shadow-card p-6 md:p-8 flex flex-col sm:flex-row gap-4 text-left" autocomplete="off">
@@ -111,7 +111,7 @@
                 </div>
                 <div class="sm:w-40">
                     <label for="roll" class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Last 3 digits</label>
-                    <input id="roll" name="roll" type="text" inputmode="numeric" placeholder="e.g. 004" required
+                    <input id="roll" name="roll" type="text" inputmode="numeric" placeholder="e.g. 123" required
                         class="w-full px-4 py-3 bg-brand-light border border-transparent rounded-xl focus:border-brand-blue focus:bg-white outline-none transition text-lg">
                 </div>
                 <button id="submit-btn" type="submit" class="sm:self-end bg-brand-green text-white px-8 py-3.5 rounded-full font-heading font-bold text-lg hover:bg-green-700 transition shadow-glow disabled:opacity-60">
@@ -287,7 +287,7 @@
             branchSelect.replaceChildren(new Option('Select your branch', ''), ...names.map(n => new Option(n, n)));
         }
 
-        // A full roll number ("VE-A2-004") works on its own; otherwise branch + last digits.
+        // A full roll number ("VE-A1-123") works on its own; otherwise branch + last digits.
         function findStudent(data, branch, input) {
             const typed = clean(input);
             if (/[a-z]/i.test(typed)) return data.byRoll.get(normRoll(typed));
@@ -428,7 +428,7 @@
             console.error(err);
         });
 
-        // Support links like results.html?roll=VE-A2-004
+        // Support links like results.html?roll=VE-A1-123
         const initialRoll = new URLSearchParams(location.search).get('roll');
         if (initialRoll) { rollInput.value = initialRoll; lookup('', initialRoll); }
     </script>
