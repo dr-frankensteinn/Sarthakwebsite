@@ -125,6 +125,8 @@
         .stack-card[data-pos="left"]   { transform: translateX(-118%) translateY(48px) rotate(-12deg) scale(.88); z-index: 1; opacity: .55; filter: blur(1.5px); cursor: pointer; }
         .stack-card[data-pos="right"]  { transform: translateX(18%) translateY(48px) rotate(12deg) scale(.88); z-index: 2; opacity: .55; filter: blur(1.5px); cursor: pointer; }
         .stack-card[data-pos="left"] a, .stack-card[data-pos="right"] a { pointer-events: none; }
+        .stack-dot { position: relative; }
+        .stack-dot::after { content: ""; position: absolute; inset: -14px -6px; }
         @media (max-width: 767px) {
             .stack-card[data-pos="left"]  { transform: translateX(-50%) translateY(18px) rotate(-4deg) scale(.94); opacity: .45; }
             .stack-card[data-pos="right"] { transform: translateX(-50%) translateY(18px) rotate(4deg) scale(.94); opacity: .45; }
@@ -158,7 +160,7 @@
             <div class="flex justify-between items-center h-[72px]">
                 <a href="/" class="flex items-center gap-3">
                     <img src="logo.png" alt="Sarthak Academy" width="45" height="56" class="h-12 w-auto object-contain">
-                    <span class="hidden sm:block font-heading font-extrabold text-brand-dark leading-tight">Sarthak<br><span class="text-xs font-bold tracking-[0.2em] text-brand-green">ACADEMY</span></span>
+                    <span class="leading-tight"><span class="block font-heading font-extrabold text-brand-dark text-[17px] tracking-tight">Sarthak Academy</span><span class="block text-xs font-semibold text-brand-green">Abacus · Vedic Maths · Phonics</span></span>
                 </a>
 
                 <div class="hidden md:flex items-center gap-7">
@@ -171,8 +173,9 @@
                     </a>
                 </div>
 
-                <button id="mobile-menu-btn" class="md:hidden text-brand-dark p-2" aria-label="Open menu">
-                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                <button id="mobile-menu-btn" class="md:hidden text-brand-dark p-2 -mr-2" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+                    <svg class="menu-open w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    <svg class="menu-close hidden w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 6l12 12M18 6L6 18"></path></svg>
                 </button>
             </div>
         </div>
@@ -394,7 +397,7 @@
                         <span class="text-xs font-bold uppercase tracking-wide bg-[#e9f8ef] text-brand-green rounded-full px-3 py-1">9 Months</span>
                     </div>
                     <p class="mt-3 text-sm leading-relaxed flex-1">Harnessing the 16 sutras of ancient Indian mathematics — perfect for students who want to speed up school maths and competitive exam calculations.</p>
-                    <a href="/vedic-maths-classes-vasai/" class="mt-6 inline-flex items-center gap-2 text-brand-green font-heading font-bold text-sm hover:gap-3 transition-all">Vedic Maths course details <span aria-hidden="true">→</span></a>
+                    <a href="/vedic-maths-classes-vasai/" class="mt-4 inline-flex items-center gap-2 py-2 text-brand-green font-heading font-bold text-sm hover:gap-3 transition-all">Vedic Maths course details <span aria-hidden="true">→</span></a>
                 </div>
 
                 <!-- Phonics -->
@@ -410,7 +413,7 @@
                         <span class="text-xs font-bold uppercase tracking-wide bg-[#fdf5dc] text-[#9a7409] rounded-full px-3 py-1">Foundation</span>
                     </div>
                     <p class="mt-3 text-sm leading-relaxed flex-1">Language is as important as logic. Our Phonics and Grammar course helps your child read fluently, spell correctly and speak with confidence.</p>
-                    <a href="/phonics-classes-vasai/" class="mt-6 inline-flex items-center gap-2 text-[#9a7409] font-heading font-bold text-sm hover:gap-3 transition-all">Phonics course details <span aria-hidden="true">→</span></a>
+                    <a href="/phonics-classes-vasai/" class="mt-4 inline-flex items-center gap-2 py-2 text-[#9a7409] font-heading font-bold text-sm hover:gap-3 transition-all">Phonics course details <span aria-hidden="true">→</span></a>
                 </div>
             </div>
         </div>
@@ -465,7 +468,7 @@
                 </div>
             </div>
 
-            <div class="relative sky-soft rounded-3xl min-h-[360px] overflow-hidden" aria-hidden="true">
+            <div class="relative sky-soft rounded-3xl min-h-[280px] md:min-h-[360px] overflow-hidden order-first md:order-none" aria-hidden="true">
                 <div class="cloud w-64 h-24 -top-6 -left-10"></div>
 
                 <!-- Step 1: booked -->
@@ -565,7 +568,7 @@
                     <p class="text-sm font-bold text-brand-green">✦ Students in action</p>
                     <h2 class="mt-2 text-3xl md:text-4xl font-heading font-extrabold text-brand-dark">See the speed for yourself</h2>
                 </div>
-                <a href="results.html" class="inline-flex items-center gap-2 text-brand-blue font-heading font-bold text-sm">Competition results 2026 <span aria-hidden="true">→</span></a>
+                <a href="results.html" class="inline-flex items-center gap-2 py-2 text-brand-blue font-heading font-bold text-sm">Competition results 2026 <span aria-hidden="true">→</span></a>
             </div>
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="aspect-video rounded-3xl overflow-hidden shadow-soft bg-brand-light">
@@ -622,7 +625,7 @@
                         <div>
                             <h3 class="font-heading font-bold text-brand-dark">Address</h3>
                             <p class="text-sm mt-1">Shop No. 24, Shubhlaxmi Commercial Complex,<br>Opposite Vasant Nagari Ground, Vasai East, Vasai-Virar.</p>
-                            <a href="https://maps.google.com/?cid=1820802130721355119" target="_blank" rel="noopener" class="inline-block mt-2 text-sm text-brand-blue font-bold">Get directions →</a>
+                            <a href="https://maps.google.com/?cid=1820802130721355119" target="_blank" rel="noopener" class="inline-block mt-1 py-2 text-sm text-brand-blue font-bold">Get directions →</a>
                         </div>
                     </div>
                     <div class="flex items-start gap-4 bg-brand-light rounded-2xl p-5">
@@ -635,7 +638,17 @@
                         </div>
                     </div>
                 </div>
-                <p class="mt-6 text-sm"><span class="font-semibold text-brand-dark">Other locations:</span> we have multiple centres across the region. <a href="#contact" class="text-brand-blue underline">Contact us</a> to find the one nearest to you.</p>
+                <div class="mt-6">
+                    <p class="text-sm font-semibold text-brand-dark">Our other branches</p>
+                    <div class="mt-3 flex flex-wrap gap-2 text-sm">
+                        <span class="bg-brand-light rounded-full px-3 py-1.5">Vasai West</span>
+                        <span class="bg-brand-light rounded-full px-3 py-1.5">Virar</span>
+                        <span class="bg-brand-light rounded-full px-3 py-1.5">Manor</span>
+                        <span class="bg-brand-light rounded-full px-3 py-1.5">Dahanu</span>
+                        <span class="bg-brand-light rounded-full px-3 py-1.5">Bhivandi</span>
+                    </div>
+                    <p class="mt-3 text-sm"><a href="#contact" class="text-brand-blue font-semibold">Contact us</a> to find the branch nearest to you.</p>
+                </div>
             </div>
 
             <div class="h-96 rounded-3xl overflow-hidden shadow-card">
@@ -734,10 +747,15 @@
     <script>
         const btn = document.getElementById('mobile-menu-btn');
         const menu = document.getElementById('mobile-menu');
-        btn.addEventListener('click', () => menu.classList.toggle('hidden'));
-        document.querySelectorAll('#mobile-menu a').forEach(link => {
-            link.addEventListener('click', () => menu.classList.add('hidden'));
-        });
+        function setMenu(open) {
+            menu.classList.toggle('hidden', !open);
+            btn.setAttribute('aria-expanded', open);
+            btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+            btn.querySelector('.menu-open').classList.toggle('hidden', open);
+            btn.querySelector('.menu-close').classList.toggle('hidden', !open);
+        }
+        btn.addEventListener('click', () => setMenu(menu.classList.contains('hidden')));
+        document.querySelectorAll('#mobile-menu a').forEach(link => link.addEventListener('click', () => setMenu(false)));
 
         // Rotating hero cards: front card swaps every few seconds; click a side card or dot to bring it forward.
         (() => {
