@@ -137,18 +137,23 @@
         .step-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .4s ease; }
         .step-item.is-active { background: #fff; box-shadow: 0 10px 40px -12px rgba(43, 76, 155, 0.18); }
         .step-item.is-active .step-body { grid-template-rows: 1fr; }
-        @media (max-width: 767px) { .step-body { grid-template-rows: 1fr; } }
         .step-item.is-active .step-num { background: #2b4c9b; color: #fff; }
         .step-item.is-done .step-num { background: #00a651; color: #fff; }
         .step-item.is-done .step-n { opacity: 0; }
         .step-item.is-done .step-check { opacity: 1; }
         .step-item.is-done .step-bar { width: 100% !important; }
-        .step-scene { opacity: 0; transform: translateY(16px) scale(.97); transition: opacity .5s, transform .5s; pointer-events: none; }
-        .step-scene.is-active { opacity: 1; transform: none; }
+        .step-scene { opacity: 0; transform: translateY(16px) scale(.97); transition: opacity .25s, transform .25s; pointer-events: none; }
+        .step-scene.is-active { opacity: 1; transform: none; transition: opacity .5s .2s, transform .5s .2s; }
         .step-scene .scene-pop { opacity: 0; transform: scale(.85); transition: opacity .4s .35s, transform .4s .35s cubic-bezier(.3,1.6,.5,1); }
         .step-scene.is-active .scene-pop { opacity: 1; transform: none; }
         .scene-progress { width: 0; transition: width 1.2s .3s ease; }
         .step-scene.is-active .scene-progress { width: 11%; }
+        .m-text { opacity: 0; transform: translateY(8px); pointer-events: none; transition: opacity .2s, transform .2s; }
+        .m-text.is-active { opacity: 1; transform: none; pointer-events: auto; transition: opacity .4s .25s, transform .4s .25s; }
+        .m-step.is-active .m-label { color: #2b4c9b; }
+        .m-step.is-done .m-label { color: #00a651; }
+        .m-step.is-done .m-bar { width: 100% !important; }
+        #lightbox.is-open { display: flex; }
         @media (prefers-reduced-motion: reduce) {
             .float-y { animation: none; }
             .stack-card, .step-scene, .step-scene .scene-pop, .scene-progress, .step-body { transition: none; }
@@ -215,6 +220,7 @@
 
             <form name="callback" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="js-netlify-form mt-8 max-w-md mx-auto">
                 <input type="hidden" name="form-name" value="callback">
+                <input type="hidden" name="branch" value="Vasai East">
                 <p class="hidden"><label>Leave this empty: <input name="bot-field"></label></p>
                 <div class="flex items-center bg-white rounded-full shadow-soft pl-5 pr-1.5 py-1.5 ring-1 ring-white focus-within:ring-brand-blue/40">
                     <label for="callback-phone" class="sr-only">Your phone number</label>
@@ -346,6 +352,45 @@
         </div>
     </section>
 
+    <!-- ===== Life at Sarthak (real photos, shared with parents' written consent) ===== -->
+    <section id="gallery" class="py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="text-center max-w-2xl mx-auto">
+                <p class="text-sm font-bold text-brand-green">✦ Life at Sarthak</p>
+                <h2 class="mt-2 text-3xl md:text-4xl font-heading font-extrabold text-brand-dark">Real classes. Real progress.</h2>
+                <p class="mt-3">A look inside our classrooms, competitions and celebrations.</p>
+            </div>
+            <div class="mt-10 grid grid-cols-2 md:grid-cols-4 auto-rows-[150px] md:auto-rows-[190px] gap-3 md:gap-4">
+                <button type="button" class="gallery-tile group relative overflow-hidden rounded-2xl bg-brand-light col-span-2 row-span-2" data-full="/photos/abacus-practice-1100.jpg" aria-label="Enlarge photo: Children solving sums on the abacus during class">
+                    <img src="/photos/abacus-practice-1100.jpg" srcset="/photos/abacus-practice-600.jpg 600w, /photos/abacus-practice-1100.jpg 1100w" sizes="(min-width: 768px) 25vw, 50vw" alt="Children solving sums on the abacus during class" class="w-full h-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" decoding="async">
+                </button>
+                <button type="button" class="gallery-tile group relative overflow-hidden rounded-2xl bg-brand-light row-span-2" data-full="/photos/competition-paper-1100.jpg" aria-label="Enlarge photo: A student working through the abacus competition paper">
+                    <img src="/photos/competition-paper-1100.jpg" srcset="/photos/competition-paper-600.jpg 600w, /photos/competition-paper-1100.jpg 1100w" sizes="(min-width: 768px) 25vw, 50vw" alt="A student working through the abacus competition paper" class="w-full h-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" decoding="async">
+                </button>
+                <button type="button" class="gallery-tile group relative overflow-hidden rounded-2xl bg-brand-light " data-full="/photos/students-in-class-1100.jpg" aria-label="Enlarge photo: Students in class at the Vasai East centre">
+                    <img src="/photos/students-in-class-1100.jpg" srcset="/photos/students-in-class-600.jpg 600w, /photos/students-in-class-1100.jpg 1100w" sizes="(min-width: 768px) 25vw, 50vw" alt="Students in class at the Vasai East centre" class="w-full h-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" decoding="async">
+                </button>
+                <button type="button" class="gallery-tile group relative overflow-hidden rounded-2xl bg-brand-light " data-full="/photos/phonics-classroom-1100.jpg" aria-label="Enlarge photo: Students in class at the Vasai East centre">
+                    <img src="/photos/phonics-classroom-1100.jpg" srcset="/photos/phonics-classroom-600.jpg 600w, /photos/phonics-classroom-1100.jpg 1100w" sizes="(min-width: 768px) 25vw, 50vw" alt="Students in class at the Vasai East centre" class="w-full h-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" decoding="async">
+                </button>
+                <button type="button" class="gallery-tile group relative overflow-hidden rounded-2xl bg-brand-light col-span-2" data-full="/photos/art-activity-1100.jpg" aria-label="Enlarge photo: Students working on an art activity together">
+                    <img src="/photos/art-activity-1100.jpg" srcset="/photos/art-activity-600.jpg 600w, /photos/art-activity-1100.jpg 1100w" sizes="(min-width: 768px) 25vw, 50vw" alt="Students working on an art activity together" class="w-full h-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" decoding="async">
+                </button>
+                <button type="button" class="gallery-tile group relative overflow-hidden rounded-2xl bg-brand-light " data-full="/photos/creative-activity-1100.jpg" aria-label="Enlarge photo: Students showing their art and craft work">
+                    <img src="/photos/creative-activity-1100.jpg" srcset="/photos/creative-activity-600.jpg 600w, /photos/creative-activity-1100.jpg 1100w" sizes="(min-width: 768px) 25vw, 50vw" alt="Students showing their art and craft work" class="w-full h-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" decoding="async">
+                </button>
+                <button type="button" class="gallery-tile group relative overflow-hidden rounded-2xl bg-brand-light " data-full="/photos/vedic-maths-class-1100.jpg" aria-label="Enlarge photo: Students in class at Sarthak Academy">
+                    <img src="/photos/vedic-maths-class-1100.jpg" srcset="/photos/vedic-maths-class-600.jpg 600w, /photos/vedic-maths-class-1100.jpg 1100w" sizes="(min-width: 768px) 25vw, 50vw" alt="Students in class at Sarthak Academy" class="w-full h-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" decoding="async">
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <div id="lightbox" class="hidden fixed inset-0 z-[60] bg-brand-dark/90 backdrop-blur-sm items-center justify-center p-4" role="dialog" aria-modal="true" aria-label="Photo">
+        <button type="button" id="lightbox-close" class="absolute top-4 right-4 w-11 h-11 rounded-full bg-white/15 text-white text-2xl" aria-label="Close photo">×</button>
+        <img id="lightbox-img" alt="" class="max-h-[85vh] max-w-full rounded-2xl shadow-card">
+    </div>
+
     <!-- ===== Courses ===== -->
     <section id="courses" class="py-20 bg-brand-light">
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
@@ -356,22 +401,8 @@
 
             <!-- Abacus: wide card -->
             <div class="mt-12 bg-white rounded-3xl shadow-soft p-6 md:p-10 grid md:grid-cols-2 gap-8 items-center">
-                <div class="rounded-2xl bg-[#e8eefb] p-6 flex items-center justify-center">
-                    <svg viewBox="0 0 320 210" class="w-full max-w-sm" role="img" aria-label="Illustration of an abacus">
-                        <rect x="14" y="14" width="292" height="182" rx="16" fill="#fff" stroke="#2b4c9b" stroke-width="8"/>
-                        <line x1="14" y1="72" x2="306" y2="72" stroke="#2b4c9b" stroke-width="6"/>
-                        <g stroke="#c8d3ee" stroke-width="4">
-                            <line x1="62" y1="22" x2="62" y2="188"/><line x1="111" y1="22" x2="111" y2="188"/><line x1="160" y1="22" x2="160" y2="188"/><line x1="209" y1="22" x2="209" y2="188"/><line x1="258" y1="22" x2="258" y2="188"/>
-                        </g>
-                        <g>
-                            <ellipse cx="62" cy="40" rx="19" ry="11" fill="#f2c94c"/><ellipse cx="111" cy="58" rx="19" ry="11" fill="#f2c94c"/><ellipse cx="160" cy="40" rx="19" ry="11" fill="#f2c94c"/><ellipse cx="209" cy="58" rx="19" ry="11" fill="#f2c94c"/><ellipse cx="258" cy="40" rx="19" ry="11" fill="#f2c94c"/>
-                            <ellipse cx="62" cy="88" rx="19" ry="11" fill="#00a651"/><ellipse cx="62" cy="111" rx="19" ry="11" fill="#00a651"/><ellipse cx="62" cy="158" rx="19" ry="11" fill="#00a651"/><ellipse cx="62" cy="181" rx="19" ry="11" fill="#00a651" opacity="0"/>
-                            <ellipse cx="111" cy="88" rx="19" ry="11" fill="#2b4c9b"/><ellipse cx="111" cy="135" rx="19" ry="11" fill="#2b4c9b"/><ellipse cx="111" cy="158" rx="19" ry="11" fill="#2b4c9b"/>
-                            <ellipse cx="160" cy="88" rx="19" ry="11" fill="#00a651"/><ellipse cx="160" cy="111" rx="19" ry="11" fill="#00a651"/><ellipse cx="160" cy="134" rx="19" ry="11" fill="#00a651"/><ellipse cx="160" cy="174" rx="19" ry="11" fill="#00a651"/>
-                            <ellipse cx="209" cy="112" rx="19" ry="11" fill="#2b4c9b"/><ellipse cx="209" cy="135" rx="19" ry="11" fill="#2b4c9b"/><ellipse cx="209" cy="158" rx="19" ry="11" fill="#2b4c9b"/><ellipse cx="209" cy="181" rx="19" ry="11" fill="#2b4c9b"/>
-                            <ellipse cx="258" cy="88" rx="19" ry="11" fill="#00a651"/><ellipse cx="258" cy="111" rx="19" ry="11" fill="#00a651"/><ellipse cx="258" cy="158" rx="19" ry="11" fill="#00a651"/>
-                        </g>
-                    </svg>
+                <div class="rounded-2xl overflow-hidden aspect-[4/3]">
+                    <img src="/photos/abacus-class-vasai-east-1100.jpg" srcset="/photos/abacus-class-vasai-east-600.jpg 600w, /photos/abacus-class-vasai-east-1100.jpg 1100w" sizes="(min-width: 768px) 50vw, 100vw" alt="Students practising on the abacus in class at Sarthak Academy, Vasai East" class="w-full h-full object-cover" loading="lazy" decoding="async">
                 </div>
                 <div>
                     <span class="inline-block text-xs font-bold uppercase tracking-wide bg-[#e8eefb] text-brand-blue rounded-full px-3 py-1">Age 7–14 · 9 Levels</span>
@@ -452,11 +483,72 @@
 
     <!-- ===== How to join ===== -->
     <section id="join" class="py-20 bg-white">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 grid md:grid-cols-2 gap-12 items-center">
-            <div>
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 grid md:grid-cols-2 gap-x-12 gap-y-8 items-center">
+            <div class="md:col-start-1 md:row-start-1 self-end">
                 <p class="text-sm font-bold text-brand-green">✦ How to join</p>
                 <h2 class="mt-2 text-3xl md:text-4xl font-heading font-extrabold text-brand-dark leading-tight">Start your child's journey in 3 simple steps</h2>
-                <div id="steps" class="mt-8 space-y-3">
+            </div>
+
+            <div class="md:col-start-2 md:row-start-1 md:row-span-2 relative sky-soft rounded-3xl h-[300px] md:h-[400px] overflow-hidden" aria-hidden="true">
+                <div class="cloud w-64 h-24 -top-6 -left-10"></div>
+
+                <!-- Step 1: booked -->
+                <div class="step-scene absolute inset-0 flex items-center justify-center p-8" data-scene="0">
+                    <div class="relative w-full max-w-[280px]">
+                        <div class="bg-white rounded-2xl shadow-card p-5">
+                            <div class="flex items-center gap-3">
+                                <img src="logo.png" alt="" class="h-10 w-auto">
+                                <div>
+                                    <p class="font-heading font-bold text-brand-dark text-sm">Free Trial Class</p>
+                                    <p class="text-xs text-gray-500">Sarthak Academy, Vasai East</p>
+                                </div>
+                            </div>
+                            <div class="mt-4 space-y-2"><div class="h-2.5 rounded bg-brand-light w-full"></div><div class="h-2.5 rounded bg-brand-light w-4/5"></div></div>
+                            <div class="scene-pop mt-4 flex items-center gap-2 bg-[#e9f8ef] text-brand-green rounded-xl px-3 py-2 text-sm font-bold">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                                Booked
+                            </div>
+                        </div>
+                        <div class="scene-pop absolute -right-4 -bottom-7 bg-white rounded-2xl shadow-card px-4 py-3 flex items-center gap-2 text-sm font-heading font-bold text-brand-dark">📞 We'll call you</div>
+                    </div>
+                </div>
+
+                <!-- Step 2: visit the centre (real classroom photo) -->
+                <div class="step-scene absolute inset-0 flex items-center justify-center p-6 md:p-8" data-scene="1">
+                    <div class="relative w-full max-w-[300px]">
+                        <div class="bg-white rounded-2xl shadow-card p-2">
+                            <img src="/photos/vasai-east-classroom-1100.jpg" srcset="/photos/vasai-east-classroom-600.jpg 600w, /photos/vasai-east-classroom-1100.jpg 1100w" sizes="300px" alt="" class="w-full h-36 md:h-44 object-cover rounded-xl" loading="lazy" decoding="async">
+                            <div class="flex items-center gap-2 px-2 pt-3 pb-1.5">
+                                <svg class="w-4 h-4 text-brand-green shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                <p class="font-heading font-bold text-brand-dark text-sm">Vasai East Centre</p>
+                            </div>
+                        </div>
+                        <div class="scene-pop absolute -right-3 -top-5 bg-brand-yellow rounded-2xl shadow-card px-3 py-2 text-sm font-heading font-bold text-brand-dark">👩‍🏫 Meet the teacher</div>
+                    </div>
+                </div>
+
+                <!-- Step 3: started -->
+                <div class="step-scene absolute inset-0 flex items-center justify-center p-8" data-scene="2">
+                    <div class="relative w-full max-w-[280px]">
+                        <div class="bg-white rounded-2xl shadow-card p-5">
+                            <div class="flex items-center justify-between">
+                                <p class="font-heading font-bold text-brand-dark text-sm">Abacus · Level 1</p>
+                                <span class="text-xs font-bold text-brand-green">of 9</span>
+                            </div>
+                            <div class="mt-3 h-2.5 rounded-full bg-brand-light overflow-hidden"><div class="scene-progress h-full rounded-full bg-brand-green"></div></div>
+                            <div class="mt-4 flex gap-1.5">
+                                <span class="flex-1 h-2 rounded-full bg-brand-green"></span><span class="flex-1 h-2 rounded-full bg-brand-light"></span><span class="flex-1 h-2 rounded-full bg-brand-light"></span><span class="flex-1 h-2 rounded-full bg-brand-light"></span><span class="flex-1 h-2 rounded-full bg-brand-light"></span><span class="flex-1 h-2 rounded-full bg-brand-light"></span><span class="flex-1 h-2 rounded-full bg-brand-light"></span><span class="flex-1 h-2 rounded-full bg-brand-light"></span><span class="flex-1 h-2 rounded-full bg-brand-light"></span>
+                            </div>
+                            <div class="scene-pop mt-4 flex items-center gap-2 bg-[#e9f8ef] text-brand-green rounded-xl px-3 py-2 text-sm font-bold">🎉 Welcome to Sarthak!</div>
+                        </div>
+                        <div class="scene-pop absolute -right-4 -top-7 bg-brand-yellow rounded-2xl shadow-card px-4 py-3 text-sm font-heading font-bold text-brand-dark">⚡ Speed &amp; confidence</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="md:col-start-1 md:row-start-2 self-start">
+                <!-- Desktop: full steps list -->
+                <div id="steps" class="hidden md:block space-y-3">
                     <div class="step-item rounded-2xl border border-gray-100 transition-all duration-300" data-step="0">
                         <button type="button" class="step-btn w-full flex items-center gap-4 text-left p-5 pb-4 font-heading font-bold text-brand-dark" aria-controls="step-body-0">
                             <span class="step-num relative w-9 h-9 shrink-0 rounded-full bg-brand-light text-brand-blue flex items-center justify-center text-sm transition-colors">
@@ -497,69 +589,35 @@
                         <div class="mx-5 mb-4 h-1 rounded-full bg-brand-light overflow-hidden"><div class="step-bar h-full w-0 rounded-full bg-brand-green"></div></div>
                     </div>
                 </div>
-            </div>
-
-            <div class="hidden md:block relative sky-soft rounded-3xl min-h-[360px] overflow-hidden" aria-hidden="true">
-                <div class="cloud w-64 h-24 -top-6 -left-10"></div>
-
-                <!-- Step 1: booked -->
-                <div class="step-scene absolute inset-0 flex items-center justify-center p-8" data-scene="0">
-                    <div class="relative w-full max-w-xs">
-                        <div class="bg-white rounded-2xl shadow-card p-5">
-                            <div class="flex items-center gap-3">
-                                <img src="logo.png" alt="" class="h-10 w-auto">
-                                <div>
-                                    <p class="font-heading font-bold text-brand-dark text-sm">Free Trial Class</p>
-                                    <p class="text-xs text-gray-500">Sarthak Academy, Vasai East</p>
-                                </div>
-                            </div>
-                            <div class="mt-4 space-y-2"><div class="h-2.5 rounded bg-brand-light w-full"></div><div class="h-2.5 rounded bg-brand-light w-4/5"></div></div>
-                            <div class="scene-pop mt-4 flex items-center gap-2 bg-[#e9f8ef] text-brand-green rounded-xl px-3 py-2 text-sm font-bold">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-                                Booked
-                            </div>
-                        </div>
-                        <div class="scene-pop absolute -right-5 -bottom-7 bg-white rounded-2xl shadow-card px-4 py-3 flex items-center gap-2 text-sm font-heading font-bold text-brand-dark">📞 We'll call you</div>
+                <!-- Phones: compact stepper with a fixed-height text area, so nothing jumps -->
+                <div class="md:hidden">
+                    <div class="flex gap-3">
+                        <button type="button" class="m-step flex-1 text-left" data-step="0">
+                            <span class="block h-1.5 rounded-full bg-brand-light overflow-hidden"><span class="m-bar block h-full w-0 rounded-full bg-brand-green"></span></span>
+                            <span class="m-label mt-2 flex items-center gap-1.5 text-xs font-heading font-bold text-gray-400 transition-colors"><span class="m-num">1</span> Book</span>
+                        </button>
+                        <button type="button" class="m-step flex-1 text-left" data-step="1">
+                            <span class="block h-1.5 rounded-full bg-brand-light overflow-hidden"><span class="m-bar block h-full w-0 rounded-full bg-brand-green"></span></span>
+                            <span class="m-label mt-2 flex items-center gap-1.5 text-xs font-heading font-bold text-gray-400 transition-colors"><span class="m-num">2</span> Visit</span>
+                        </button>
+                        <button type="button" class="m-step flex-1 text-left" data-step="2">
+                            <span class="block h-1.5 rounded-full bg-brand-light overflow-hidden"><span class="m-bar block h-full w-0 rounded-full bg-brand-green"></span></span>
+                            <span class="m-label mt-2 flex items-center gap-1.5 text-xs font-heading font-bold text-gray-400 transition-colors"><span class="m-num">3</span> Start</span>
+                        </button>
                     </div>
-                </div>
-
-                <!-- Step 2: visit the centre -->
-                <div class="step-scene absolute inset-0 flex items-center justify-center p-8" data-scene="1">
-                    <div class="relative w-full max-w-xs">
-                        <div class="bg-white rounded-2xl shadow-card p-5">
-                            <div class="flex items-center gap-3">
-                                <span class="w-10 h-10 rounded-xl bg-[#e9f8ef] flex items-center justify-center">
-                                    <svg class="w-5 h-5 text-brand-green" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                                </span>
-                                <div>
-                                    <p class="font-heading font-bold text-brand-dark text-sm">Vasai East Centre</p>
-                                    <p class="text-xs text-gray-500">Opp. Vasant Nagari Ground</p>
-                                </div>
-                            </div>
-                            <div class="mt-4 grid grid-cols-5 gap-1.5">
-                                <span class="h-7 rounded-md bg-brand-yellow"></span><span class="h-7 rounded-md bg-brand-green"></span><span class="h-7 rounded-md bg-brand-blue"></span><span class="h-7 rounded-md bg-brand-green"></span><span class="h-7 rounded-md bg-brand-yellow"></span>
-                            </div>
-                            <div class="scene-pop mt-4 flex items-center gap-2 bg-brand-light text-brand-blue rounded-xl px-3 py-2 text-sm font-bold">👩‍🏫 Meet the teacher</div>
+                    <div class="relative mt-4 h-[124px]">
+                        <div class="m-text absolute inset-0" data-step="0">
+                            <p class="font-heading font-bold text-brand-dark">Book a free trial class</p>
+                            <p class="mt-1.5 text-sm leading-relaxed">Fill in the form below, request a call back, or call us on <a href="tel:+919975099961" class="text-brand-blue font-semibold">+91 99750 99961</a>. It's free, with no obligation.</p>
                         </div>
-                        <div class="scene-pop absolute -left-6 -top-7 bg-brand-yellow rounded-2xl shadow-card px-4 py-3 text-sm font-heading font-bold text-brand-dark">🧮 First class</div>
-                    </div>
-                </div>
-
-                <!-- Step 3: started -->
-                <div class="step-scene absolute inset-0 flex items-center justify-center p-8" data-scene="2">
-                    <div class="relative w-full max-w-xs">
-                        <div class="bg-white rounded-2xl shadow-card p-5">
-                            <div class="flex items-center justify-between">
-                                <p class="font-heading font-bold text-brand-dark text-sm">Abacus · Level 1</p>
-                                <span class="text-xs font-bold text-brand-green">of 9</span>
-                            </div>
-                            <div class="mt-3 h-2.5 rounded-full bg-brand-light overflow-hidden"><div class="scene-progress h-full rounded-full bg-brand-green"></div></div>
-                            <div class="mt-4 flex gap-1.5">
-                                <span class="flex-1 h-2 rounded-full bg-brand-green"></span><span class="flex-1 h-2 rounded-full bg-brand-light"></span><span class="flex-1 h-2 rounded-full bg-brand-light"></span><span class="flex-1 h-2 rounded-full bg-brand-light"></span><span class="flex-1 h-2 rounded-full bg-brand-light"></span><span class="flex-1 h-2 rounded-full bg-brand-light"></span><span class="flex-1 h-2 rounded-full bg-brand-light"></span><span class="flex-1 h-2 rounded-full bg-brand-light"></span><span class="flex-1 h-2 rounded-full bg-brand-light"></span>
-                            </div>
-                            <div class="scene-pop mt-4 flex items-center gap-2 bg-[#e9f8ef] text-brand-green rounded-xl px-3 py-2 text-sm font-bold">🎉 Welcome to Sarthak!</div>
+                        <div class="m-text absolute inset-0" data-step="1">
+                            <p class="font-heading font-bold text-brand-dark">Attend the trial at our Vasai East centre</p>
+                            <p class="mt-1.5 text-sm leading-relaxed">Your child tries a real class, and you get to see our method in action and meet the teacher.</p>
                         </div>
-                        <div class="scene-pop absolute -right-5 -top-7 bg-brand-yellow rounded-2xl shadow-card px-4 py-3 text-sm font-heading font-bold text-brand-dark">⚡ Speed &amp; confidence</div>
+                        <div class="m-text absolute inset-0" data-step="2">
+                            <p class="font-heading font-bold text-brand-dark">Choose a batch and get started</p>
+                            <p class="mt-1.5 text-sm leading-relaxed">Pick the course and batch that suits your family, and your child starts building speed, accuracy and confidence.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -582,6 +640,9 @@
 
             <div id="champions-card" class="hidden mt-12 bg-white rounded-3xl shadow-card p-6 md:p-10 grid md:grid-cols-[1fr_1.6fr] gap-8 items-center">
                 <div>
+                    <div class="rounded-2xl overflow-hidden aspect-[4/3] mb-6">
+                        <img src="/photos/competition-in-progress-1100.jpg" srcset="/photos/competition-in-progress-600.jpg 600w, /photos/competition-in-progress-1100.jpg 1100w" sizes="(min-width: 768px) 35vw, 100vw" alt="Students writing the Sarthak Academy annual abacus competition" class="w-full h-full object-cover" loading="lazy" decoding="async">
+                    </div>
                     <p class="text-xs font-bold uppercase tracking-widest text-brand-green">Top scores</p>
                     <h3 class="mt-2 text-2xl md:text-3xl font-heading font-extrabold text-brand-dark leading-tight">Highest scores of 2026</h3>
                     <p class="mt-3 text-sm leading-relaxed">The category winners with the highest scores, as a share of each category's total marks.</p>
@@ -600,7 +661,7 @@
                 <p class="mt-3 max-w-md">Watch our students solve sums in seconds — the kind of speed and confidence that comes from regular abacus practice.</p>
                 <a href="results.html" class="mt-4 inline-flex items-center gap-2 py-2 text-brand-blue font-heading font-bold text-sm">Competition results 2026 <span aria-hidden="true">→</span></a>
             </div>
-            <div class="min-w-0 -mx-4 px-4 md:mx-0 md:px-0 flex gap-4 md:gap-6 overflow-x-auto snap-x snap-mandatory pb-2 [scrollbar-width:none]">
+            <div class="min-w-0 -mx-4 px-4 md:mx-0 md:px-0 flex gap-4 md:gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory pb-2 md:pb-12 [scrollbar-width:none]">
                 <div class="snap-center shrink-0 w-[68vw] max-w-[270px] aspect-[9/16] rounded-3xl overflow-hidden shadow-card bg-brand-dark">
                     <iframe class="w-full h-full" src="https://www.youtube.com/embed/OrxFIhv31BA?rel=0" title="Can your child solve sums faster than this 8 year old? — Sarthak Academy" loading="lazy" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
@@ -669,13 +730,13 @@
                     </div>
                 </div>
                 <div class="mt-6">
-                    <p class="text-sm font-semibold text-brand-dark">Our other branches</p>
+                    <p class="text-sm font-semibold text-brand-dark">Abacus classes at our other branches</p>
                     <div class="mt-3 flex flex-wrap gap-2 text-sm">
-                        <span class="bg-brand-light rounded-full px-3 py-1.5">Vasai West</span>
-                        <span class="bg-brand-light rounded-full px-3 py-1.5">Virar</span>
-                        <span class="bg-brand-light rounded-full px-3 py-1.5">Manor</span>
-                        <span class="bg-brand-light rounded-full px-3 py-1.5">Dahanu</span>
-                        <span class="bg-brand-light rounded-full px-3 py-1.5">Bhivandi</span>
+                        <a href="/abacus-classes-vasai-west/" class="bg-brand-light hover:bg-blue-100 text-brand-blue font-semibold rounded-full px-3.5 py-2 transition">Vasai West →</a>
+                        <a href="/abacus-classes-virar/" class="bg-brand-light hover:bg-blue-100 text-brand-blue font-semibold rounded-full px-3.5 py-2 transition">Virar →</a>
+                        <a href="/abacus-classes-manor/" class="bg-brand-light hover:bg-blue-100 text-brand-blue font-semibold rounded-full px-3.5 py-2 transition">Manor →</a>
+                        <a href="/abacus-classes-dahanu/" class="bg-brand-light hover:bg-blue-100 text-brand-blue font-semibold rounded-full px-3.5 py-2 transition">Dahanu →</a>
+                        <a href="/abacus-classes-bhivandi/" class="bg-brand-light hover:bg-blue-100 text-brand-blue font-semibold rounded-full px-3.5 py-2 transition">Bhivandi →</a>
                     </div>
                     <p class="mt-3 text-sm"><a href="#contact" class="text-brand-blue font-semibold">Contact us</a> to find the branch nearest to you.</p>
                 </div>
@@ -699,6 +760,7 @@
             <div class="bg-white rounded-3xl shadow-card p-6 md:p-10">
                 <form name="enrollment" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="js-netlify-form space-y-5">
                     <input type="hidden" name="form-name" value="enrollment">
+                    <input type="hidden" name="branch" value="Vasai East">
                     <p class="hidden"><label>Leave this empty: <input name="bot-field"></label></p>
 
                     <div class="grid md:grid-cols-2 gap-5">
@@ -769,6 +831,8 @@
                 <p class="font-heading font-bold text-white mb-3">Visit Us</p>
                 <p class="leading-relaxed">Shop No. 24, Shubhlaxmi Commercial Complex, Opp. Vasant Nagari Ground, Vasai East</p>
                 <p class="mt-2"><a href="tel:+919975099961" class="hover:text-white">+91 99750 99961</a> / <a href="tel:+918830557880" class="hover:text-white">+91 88305 57880</a></p>
+                <p class="mt-5 font-heading font-bold text-white">Abacus branches</p>
+                <p class="mt-2 leading-relaxed"><a href="/abacus-classes-vasai-west/" class="hover:text-white">Vasai West</a> · <a href="/abacus-classes-virar/" class="hover:text-white">Virar</a> · <a href="/abacus-classes-manor/" class="hover:text-white">Manor</a> · <a href="/abacus-classes-dahanu/" class="hover:text-white">Dahanu</a> · <a href="/abacus-classes-bhivandi/" class="hover:text-white">Bhivandi</a></p>
             </div>
         </div>
         <div class="max-w-6xl mx-auto px-4 sm:px-6 mt-10 pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between gap-2 text-blue-100/50">
@@ -818,9 +882,12 @@
             show(0); play();
         })();
 
-        // Join steps: autoplay through the 3 steps with a progress bar; click a step to jump to it.
+        // Join steps: autoplay through the 3 steps with progress bars; tap a step to jump to it.
+        // Desktop uses the full list; phones use the compact stepper. The picture changes for both.
         (() => {
             const items = [...document.querySelectorAll('#steps .step-item')];
+            const tabs = [...document.querySelectorAll('.m-step')];
+            const texts = [...document.querySelectorAll('.m-text')];
             const scenes = [...document.querySelectorAll('.step-scene')];
             const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
             const DURATION = 5000;
@@ -833,27 +900,48 @@
                     el.querySelector('.step-btn').setAttribute('aria-expanded', k === i);
                     if (k >= i) el.querySelector('.step-bar').style.width = '0%';
                 });
-                scenes.forEach((s, k) => s.classList.toggle('is-active', k === i));
+                tabs.forEach((el, k) => {
+                    el.classList.toggle('is-active', k === i);
+                    el.classList.toggle('is-done', k < i);
+                    if (k >= i) el.querySelector('.m-bar').style.width = '0%';
+                });
+                texts.forEach((el, k) => el.classList.toggle('is-active', k === i));
+                scenes.forEach((el, k) => el.classList.toggle('is-active', k === i));
                 start = performance.now();
             }
             function tick(now) {
                 if (visible && !paused && !reduce) {
                     const t = Math.min((now - start) / DURATION, 1);
-                    items[active].querySelector('.step-bar').style.width = (t * 100) + '%';
-                    if (t >= 1) setActive((active + 1) % items.length);
+                    const pct = (t * 100) + '%';
+                    if (items[active]) items[active].querySelector('.step-bar').style.width = pct;
+                    if (tabs[active]) tabs[active].querySelector('.m-bar').style.width = pct;
+                    if (t >= 1) setActive((active + 1) % scenes.length);
                 }
                 requestAnimationFrame(tick);
             }
             items.forEach((el, k) => el.querySelector('.step-btn').addEventListener('click', () => setActive(k)));
+            tabs.forEach((el, k) => el.addEventListener('click', () => setActive(k)));
             const box = document.getElementById('join');
             box.addEventListener('mouseenter', () => { paused = true; pausedAt = performance.now(); });
             box.addEventListener('mouseleave', () => { paused = false; start += performance.now() - pausedAt; });
             new IntersectionObserver(([e]) => {
-                if (e.isIntersecting && !visible) setActive(active === 0 ? 0 : active);
+                if (e.isIntersecting && !visible) setActive(active);
                 visible = e.isIntersecting;
-            }, { threshold: 0.4 }).observe(box);
+            }, { threshold: 0.35 }).observe(box);
             setActive(0);
             requestAnimationFrame(tick);
+        })();
+
+        // Photo gallery: tap a photo to see it larger.
+        (() => {
+            const box = document.getElementById('lightbox'), big = document.getElementById('lightbox-img');
+            const close = () => { box.classList.remove('is-open'); big.removeAttribute('src'); };
+            document.querySelectorAll('.gallery-tile').forEach(t => t.addEventListener('click', () => {
+                big.src = t.dataset.full; big.alt = t.querySelector('img').alt; box.classList.add('is-open');
+                document.getElementById('lightbox-close').focus();
+            }));
+            box.addEventListener('click', e => { if (e.target !== big) close(); });
+            document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
         })();
 
         // Forms: save the request in Netlify Forms (backup record + email alert), then open
@@ -867,10 +955,11 @@
                     `Parent: ${d.parent_name}`,
                     `Child: ${d.child_name} (age ${d.child_age})`,
                     `Course: ${d.course}`,
+                    `Branch: ${d.branch}`,
                     `Phone: ${d.phone}`,
                 ].join('\n');
             }
-            return `Hi Sarthak Academy, please call me back about a free trial class. My number is ${d.phone}.`;
+            return `Hi Sarthak Academy, please call me back about a free trial class (${d.branch} branch). My number is ${d.phone}.`;
         }
         document.querySelectorAll('form.js-netlify-form').forEach(form => {
             const note = form.querySelector('.form-note');
